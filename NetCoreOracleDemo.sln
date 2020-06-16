@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OracleDataContext", "ClassLibrary1\OracleDataContext.csproj", "{B2A59522-AF17-4DA5-83C2-9074C65F1753}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OracleDataContext", "OracleDataContext\OracleDataContext.csproj", "{B2A59522-AF17-4DA5-83C2-9074C65F1753}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{84C44711-E803-4165-9F45-57576679384B}"
 EndProject
