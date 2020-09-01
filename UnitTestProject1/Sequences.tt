@@ -1,0 +1,80 @@
+﻿<#@ template language="C#" debug="True" hostspecific="True" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Configuration" #>
+<#@ assembly name="$(TargetDir)Oracle.ManagedDataAccess.dll" #>
+
+<#@ import namespace="System"#>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="Oracle.ManagedDataAccess.Client" #>
+<#@ import namespace="System.Data.Common" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Globalization" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Configuration" #>
+
+
+<#@ import namespace="System.CodeDom"#>
+<#@ import namespace="System.CodeDom.Compiler"#>
+<#@ import namespace="System.Reflection"#>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating"#>
+<#@ output extension=".cs" #>
+
+namespace XXY.Cargo.DataContext{
+	public enum Sequences{
+	<#
+	var sqs = LoadSequences();
+	if(sqs.Count>0){ 
+		for(var i=0;i<sqs.Count;i++){
+	#>
+
+		<#= sqs[i] #> <#if(i < sqs.Count - 1)
+		{#> ,
+		<#}#>
+	<#
+		}
+	}
+	#>
+
+	}
+}
+
+<#+
+const string ConnectionString = @"Persist Security Info=True;DATA SOURCE=192.168.0.43:1521/ORCL;USER ID=CARGO;PASSWORD=CARGO;";
+const string SQL = @"SELECT * FROM all_sequences WHERE SEQUENCE_OWNER = 'CARGO'";
+
+IDataReader GetReader(string sql){
+	OracleConnection conn=new OracleConnection(ConnectionString);
+	OracleCommand cmd = new OracleCommand(sql,conn);
+	System.Diagnostics.Debugger.Launch();
+	try
+	{
+	conn.Open();
+	}
+	catch(System.Exception ex)
+	{
+	
+	}
+	
+	return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+}
+
+		List<string> LoadSequences(){
+		var descs = new	List<string>();
+		using(IDataReader idr = GetReader(SQL)){
+			while(idr.Read()){
+				string seqName = idr["SEQUENCE_NAME"].ToString();
+				descs.Add(seqName);
+			}
+		}
+
+		return descs;
+}
+
+#>

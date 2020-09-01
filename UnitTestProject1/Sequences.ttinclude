@@ -1,0 +1,59 @@
+﻿<#@ template language="C#" debug="True" hostspecific="True" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Configuration" #>
+<#@ assembly name="$(TargetDir)Oracle.ManagedDataAccess.dll" #>
+
+<#@ import namespace="System"#>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="Oracle.ManagedDataAccess.Client" #>
+<#@ import namespace="System.Data.Common" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Globalization" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Configuration" #>
+
+
+<#@ import namespace="System.CodeDom"#>
+<#@ import namespace="System.CodeDom.Compiler"#>
+<#@ import namespace="System.Reflection"#>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating"#>
+
+<#+
+const string ConnectionString = @"Persist Security Info=True;DATA SOURCE=192.168.0.43:1521/ORCL;USER ID=CARGO;PASSWORD=CARGO;";
+const string SQL = @"SELECT * FROM all_sequences WHERE SEQUENCE_OWNER = 'CARGO'";
+
+IDataReader GetReader(string sql){
+	Oracle.ManagedDataAccess.Client.OracleConnection conn=new Oracle.ManagedDataAccess.Client.OracleConnection(ConnectionString);
+	Oracle.ManagedDataAccess.Client.OracleCommand cmd = new Oracle.ManagedDataAccess.Client.OracleCommand(sql,conn);
+	try
+	{
+	conn.Open();
+	}
+	catch(System.Exception ex)
+	{
+	
+	}
+	
+	return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+}
+
+List<string> LoadSequences(){
+		var descs = new	List<string>();
+		using(IDataReader idr = GetReader(SQL)){
+			while(idr.Read()){
+				string seqName = idr["SEQUENCE_NAME"].ToString();
+				descs.Add(seqName);
+			}
+		}
+
+		return descs;
+}
+
+#>

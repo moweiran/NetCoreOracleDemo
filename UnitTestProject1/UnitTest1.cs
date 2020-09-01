@@ -14,7 +14,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod1()
         {
-            using(var db = new CARGOContext())
+            using (var db = new CARGOContext())
             {
                 var query = from o in db.BASE_COMPANY
                             where o.DELETE_MARK != 1
@@ -69,9 +69,9 @@ namespace UnitTestProject1
         {
             try
             {
-                const string ConnectionString = @"User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:1521/ORCL;";
+                const string ConnectionString = @"Persist Security Info=True;DATA SOURCE=192.168.0.43:1521/ORCL;USER ID=CARGO;PASSWORD=CARGO;";
                 const string SQL = @"SELECT * FROM all_sequences WHERE SEQUENCE_OWNER = 'CARGO'";
-
+                var sqs = LoadSequences(SQL, ConnectionString);
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace UnitTestProject1
         public List<string> LoadSequences(string sql, string ConnectionString)
         {
             var descs = new List<string>();
-            using (IDataReader idr = GetReader(sql,ConnectionString))
+            using (IDataReader idr = GetReader(sql, ConnectionString))
             {
                 while (idr.Read())
                 {

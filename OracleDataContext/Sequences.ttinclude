@@ -1,0 +1,60 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Configuration" #>
+<#@ assembly name="C:\Users\LZY\.nuget\packages\oracle.manageddataaccess.core\2.19.80\lib\netstandard2.0\Oracle.ManagedDataAccess.dll" #>
+
+<#@ import namespace="System"#>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="Oracle.ManagedDataAccess.Client" #>
+<#@ import namespace="System.Linq" #>
+
+<#+
+const string ConnectionString = @"Persist Security Info=True;DATA SOURCE=192.168.0.43:1521/ORCL;USER ID=CARGO;PASSWORD=CARGO;";
+const string SQL = @"SELECT * FROM all_sequences WHERE SEQUENCE_OWNER = 'CARGO'";
+
+//IDataReader GetReader(string sql){
+	//Oracle.ManagedDataAccess.Client.OracleConnection conn=new Oracle.ManagedDataAccess.Client.OracleConnection(ConnectionString);
+	//Oracle.ManagedDataAccess.Client.OracleCommand cmd = new Oracle.ManagedDataAccess.Client.OracleCommand(sql,conn);
+	//try
+	//{
+	//conn.Open();
+	//}
+	//catch(System.Exception ex)
+	//{
+	//
+	//}
+	
+	//return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+//}
+
+List<string> LoadSequences(){
+		var descs = new	List<string>();		
+		try
+		{
+			OracleConnection conn=new OracleConnection(ConnectionString);
+			OracleCommand cmd = new OracleCommand(SQL,conn);
+			((OracleConnection)conn).Open();
+		}
+		catch(System.Exception ex)
+		{
+	
+		}
+		finally
+		{
+
+        }
+		//using(IDataReader idr = GetReader(SQL)){
+		//	while(idr.Read()){
+		//		string seqName = idr["SEQUENCE_NAME"].ToString();
+		//		descs.Add(seqName);
+		//	}
+		//}
+		descs.Add("ajdjfds");
+		return descs;
+}
+
+#>

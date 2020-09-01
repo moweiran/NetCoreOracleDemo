@@ -1,0 +1,12 @@
+bin
+obj
+*.dll
+!dlls/*.dll
+*.pubxml.user 
+*.csproj.user 
+.sourcemaps 
+.sourcemaps/*
+packages
+TestResults
+LWTCH.Deploy
+.vs
