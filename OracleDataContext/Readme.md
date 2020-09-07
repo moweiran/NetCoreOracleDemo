@@ -14,3 +14,9 @@ optionsBuilder.UseOracle("User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:
 });
 ## 4. 获取Sequence
 使用Oracle.ManagedDataAccess.Core+T4模版
+注意应用
+```
+<#@ assembly Name="C:\Program Files\dotnet\sdk\3.1.401\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\netstandard.dll" #>
+<#@ assembly name="C:\Users\Administrator\.nuget\packages\oracle.manageddataaccess.core\2.19.80\lib\netstandard2.0\Oracle.ManagedDataAccess.dll" #>
+```
+

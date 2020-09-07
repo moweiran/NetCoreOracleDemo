@@ -1,4 +1,5 @@
 using ClassLibrary1.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Oracle.ManagedDataAccess.Client;
 using System;
@@ -30,12 +31,17 @@ namespace UnitTestProject1
         [TestMethod]
         public void AddCustomer()
         {
-            //using (var db = new CARGOContext())
-            //{
-            //    var user = new BASE_USERINFO();
-            //    user.useri
-            //}
+            using (var db = new CARGOContext())
+            {
+                var user = new BASE_USERINFO();
+                //user.USER_ID =
+            }
         }
+
+        //public static decimal GetNextVal(this DbContext ctx, string seqName)
+        //{
+        //    return ctx.Query<decimal>(string.Format("SELECT {0}.NEXTVAL FROM DUAL", seqName)).First();
+        //}
 
         [TestMethod]
         public void TestOracleManagedDataAccessCore()
