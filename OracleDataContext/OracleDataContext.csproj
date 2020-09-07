@@ -26,11 +26,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Sequences.tt</DependentUpon>
     </Compile>
-    <Compile Update="Template1.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template1.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
