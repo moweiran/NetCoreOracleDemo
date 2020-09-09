@@ -1,0 +1,27 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+package XXY.UC2.GrpcLibrary;
+
+service ContainerLocationService {
+	rpc GetContainerLocationsByCity(ContainerLocationRequest) returns (ContainerLocationResponse) {}
+	rpc GetByLocationName(ContainerLocationRequest) returns (ContainerLocationResponse) {}
+	rpc GetByLocationId(ContainerLocationRequest) returns (ContainerLocationResponse) {}
+}
+
+message ContainerLocationRequest {
+	int64 LocationId = 1;
+	int64  CityId = 2;
+	string LocationName = 3;
+	Pager Pager = 4;
+}
+
+message ContainerLocationResponse {
+	WSContainerLocation Model = 1;
+	repeated WSContainerLocation List = 2;
+}
+
+message WSContainerLocation {
+	int64 CityId = 1;
+	int64 LocationId = 2;
+	string ContainerLocationName = 3;
+}

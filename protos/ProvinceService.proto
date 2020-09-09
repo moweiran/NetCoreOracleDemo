@@ -1,0 +1,41 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+package XXY.UC2.GrpcLibrary;
+
+service ProvinceService {
+	rpc GetProvinces(ProvinceRequest) returns (ProvinceResponse) {}
+	rpc GetAllProvinces(ProvinceRequest) returns (ProvinceResponse) {}
+	rpc GetProvinceBySeq(ProvinceRequest) returns (ProvinceResponse) {}
+}
+
+message ProvinceRequest {
+	int64 Id = 1;
+	int64 CountryId = 2;
+	string Name = 3;
+	Pager Pager = 4;
+}
+
+message ProvinceResponse {
+	WSProvince Model = 1;
+	repeated WSProvince List = 2;
+	repeated WSProvinceListItem ListItem = 3;
+}
+
+message WSProvince {
+	int64 BaseProvinceId = 1;
+	int64 BaseCountryId = 2;
+	string CountryCode = 3;
+	string CountryNameCn = 4;
+	string CountryNameEn = 5;
+	string ProvinceCode = 6;
+	string ProvinceNameEn = 7;
+	string ProvinceNameCn = 8;
+}
+
+message WSProvinceListItem {
+	int64 ProvinceId = 1;
+	string NameCN = 2;
+	string NameEN = 3;
+	string CountryCode = 4;
+	int64 CountryId = 5;
+}

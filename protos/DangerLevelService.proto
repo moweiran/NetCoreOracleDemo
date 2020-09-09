@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service DangerLevelService {
+	rpc GetAllDangerLevels(DangerLevelRequest) returns (DangerLevelResponse) {}
+	rpc GetLevelById(DangerLevelRequest) returns (DangerLevelResponse) {}
+}
+
+message DangerLevelRequest {
+	int64 Id = 1;
+}
+
+message DangerLevelResponse {
+	WSDangerLevelBrief Model = 1;
+	repeated WSDangerLevelBrief List = 2;
+}
+
+message WSDangerLevelBrief {
+	int64 DangerLevelId = 1;
+	string DangerCode = 2;
+	string DangerNameEn = 3;
+	string DangerNameCn = 4;
+}

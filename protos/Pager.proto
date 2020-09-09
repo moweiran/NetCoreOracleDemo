@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+message Pager{
+	int32 TotalItems = 1;
+	int32 CurrentPage = 2;
+	int32 ItemsPerPage = 3;
+}

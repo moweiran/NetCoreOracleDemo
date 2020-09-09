@@ -1,0 +1,42 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+package XXY.UC2.GrpcLibrary;
+
+service CityService {
+	rpc GetCities(CityRequest) returns (CityResponse) {}
+	rpc GetCitiesCount(CityRequest) returns (CityResponse) {}
+	rpc GetCityById(CityRequest) returns (CityResponse) {}
+	rpc GetCitiesByIds(CityRequest) returns (CityResponse) {}
+	rpc GetCityByName(CityRequest) returns (CityResponse) {}
+	rpc GetCitiesByNameIgnoreCase(CityRequest) returns (CityResponse) {}
+	rpc GetCitiesByName(CityRequest) returns (CityResponse) {}
+	rpc GetAllCities(CityRequest) returns (CityResponse) {}
+	rpc DistinguishCityByName(CityRequest) returns (CityResponse) {}
+}
+
+message CityRequest {
+	int64 CityId = 1;
+	repeated int64 CityIds = 2;
+	string CityName = 3;
+	Pager Pager = 4;
+	int64 CountryId = 5;
+	int64 ProvinceId = 6;
+}
+
+message CityResponse {
+	WSCity Model = 1;
+	repeated WSCity List = 2;
+}
+
+message WSCity {
+	int64 CityId = 1;
+	string CountryCode = 2;
+	int64 ProvinceId = 3;
+	string CityNameCN = 4;
+	string CityNameEN = 5;
+	string ProvinceNameCN = 6;
+	string ProvinceNameEN = 7;
+	string CountryNameCN = 8;
+	string CountryNameEN = 9;
+	int64 CountryId = 10; 
+}

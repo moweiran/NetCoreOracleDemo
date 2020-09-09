@@ -1,0 +1,32 @@
+﻿syntax = "proto3";
+import "WSLocation.proto";
+import "WSLocationBrief.proto";
+package XXY.UC2.GrpcLibrary;
+
+service DistrictService {
+	rpc GetDistrictByCityIds(DistrictRequest) returns (DistrictResponse) {}
+	rpc GetDistrictByCodes(DistrictRequest) returns (DistrictResponse) {}
+	rpc GetDistrictIdByCode(DistrictRequest) returns (DistrictResponse) {}
+	rpc GetDistrictCodeById(DistrictRequest) returns (DistrictResponse) {}
+	rpc GetDistrictByCode(DistrictRequest) returns (DistrictResponse) {}
+	rpc GetDistrictById(DistrictRequest) returns (DistrictResponse) {}
+	rpc GetDistrictByIds(DistrictRequest) returns (DistrictResponse) {}
+	rpc GetDistrictsByCityId(DistrictRequest) returns (DistrictResponse) {}
+
+}
+
+message DistrictRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	repeated int64 CityIds = 3;
+	repeated string Codes = 4;
+	string Code = 5;
+	int64 CityId = 6;
+}
+
+message DistrictResponse {
+	WSLocationBrief BriefModel = 1;
+	repeated WSLocationBrief BriefList = 2;
+	WSLocation Model = 3;
+	repeated WSLocation List = 4;
+}

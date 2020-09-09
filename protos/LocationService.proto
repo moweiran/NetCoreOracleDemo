@@ -1,0 +1,59 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+import "WSLocation.proto";
+import "WSLocationBrief.proto";
+package XXY.UC2.GrpcLibrary;
+
+service LocationService {
+	rpc GetLocationByCityIds(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocationByCodes(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocationIdByCode(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocationCodeById(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocationByCode(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocationById(LocationRequest) returns (LocationResponse) {}
+	rpc GetCityIdByLocationId(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocationByIds(LocationRequest) returns (LocationResponse) {}
+	rpc GetSimpleLocations(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocationsByNameEqualIgnoreCase(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocations(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocationCount(LocationRequest) returns (LocationResponse) {}
+	rpc GetLocationsByCityId(LocationRequest) returns (LocationResponse) {}
+	rpc GetOwnerLocationByCityId(LocationRequest) returns (LocationResponse) {}
+	rpc GetAllLocations(LocationRequest) returns (LocationResponse) {}
+	rpc GetPorts(LocationRequest) returns (LocationResponse) {}
+	rpc GetPortsByCityId(LocationRequest) returns (LocationResponse) {}
+	rpc GetPortById(LocationRequest) returns (LocationResponse) {}
+	rpc GetPortByCode(LocationRequest) returns (LocationResponse) {}
+	rpc GetAirports(LocationRequest) returns (LocationResponse) {}
+	rpc GetAirportById(LocationRequest) returns (LocationResponse) {}
+	rpc GetAirportByCode(LocationRequest) returns (LocationResponse) {}
+	rpc GetAirportsByLocationName(LocationRequest) returns (LocationResponse) {}
+	rpc GetAirportsByName(LocationRequest) returns (LocationResponse) {}
+	rpc GetAirportCount(LocationRequest) returns (LocationResponse) {}
+}
+
+message LocationRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	string Code = 3;
+	repeated int64 CityIds = 4;
+	repeated string Codes = 5;
+	string LocationName = 6;
+	Pager Pager = 7;
+	bool IncludeAirPort = 8;
+	bool IsPort = 9;
+	int64 CityId = 10;
+	int64 CountryId = 11;
+	int64 ProvinceId = 12;
+	int64 LocType = 13;
+	int64 ExcludeLocationId = 14;
+	string AirportName = 15;
+	int64 ExcludeAirpPortId = 16;
+}
+
+message LocationResponse {
+	WSLocation Model = 1;
+	repeated WSLocation List = 2;
+	int32 Count = 3;
+	repeated WSLocationBrief BriefList = 4;
+}

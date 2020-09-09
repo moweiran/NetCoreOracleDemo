@@ -1,0 +1,39 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+import "SimpleUCCompany.proto";
+package XXY.UC2.GrpcLibrary;
+
+service CarrierService {
+	rpc GetBySeq(CarrierRequest) returns (CarrierResponse) {}
+	rpc GetBySeqs(CarrierRequest) returns (CarrierResponse) {}
+	rpc GetCarrierByCode(CarrierRequest) returns (CarrierResponse) {}
+	rpc GetCarrierById(CarrierRequest) returns (CarrierResponse) {}
+	rpc GetAllCarriers(CarrierRequest) returns (CarrierResponse) {}
+	rpc GetCarriers(CarrierRequest) returns (CarrierResponse) {}
+	rpc GetCarriersByNameLike(CarrierRequest) returns (CarrierResponse) {}
+	rpc GetCarrierByIds(CarrierRequest) returns (CarrierResponse) {}
+}
+
+message CarrierRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	string CarrierCode = 3;
+	int64 CarrierId = 4;
+	string CarrierName = 5;
+	Pager Pager = 6;
+}
+
+message CarrierResponse {
+	WSCarrierBrief BriefModel = 1;
+	repeated WSCarrierBrief BriefList = 2;
+	SimpleUCCompany Model = 3;
+	repeated SimpleUCCompany List = 4;
+}
+
+message WSCarrierBrief {
+	string CarrierCode = 1;
+	int64 CarrierId = 2;
+	string CarrierNameCN = 3;
+	string CarrierNameEN = 4;
+	string YDWCode = 5;
+}

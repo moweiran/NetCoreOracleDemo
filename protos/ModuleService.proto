@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service ModuleService {
+	rpc GetSimpleModules(ModuleRequest) returns (ModuleResponse) {}
+}
+
+message ModuleRequest {
+	string ApplicationKey = 1;
+	string CompanyClass = 2;
+}
+
+message ModuleResponse {
+	repeated WSSimpleModule List = 2;
+}
+
+message WSSimpleModule {
+	int64 ApplicationId = 1;
+	string ApplicationName = 2;
+	int64 ApplicationRoleId = 3;
+	int64 PlatForm = 4;
+	int64 ModuleId = 5;
+}

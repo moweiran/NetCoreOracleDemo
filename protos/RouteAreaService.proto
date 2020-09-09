@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service RouteAreaService {
+	rpc GetRouteAreas(RouteAreaRequest) returns (RouteAreaResponse) {}
+	rpc GetRouteAreaById(RouteAreaRequest) returns (RouteAreaResponse) {}
+	rpc GetRouteAreasByIds(RouteAreaRequest) returns (RouteAreaResponse) {}
+	rpc GetStatisticsRouteAreas(RouteAreaRequest) returns (RouteAreaResponse) {}
+}
+
+message RouteAreaRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+}
+
+message RouteAreaResponse {
+	WSRouteArea Model = 1;
+	repeated WSRouteArea List = 2;
+}
+
+message WSRouteArea {
+	int64 ShipRouteAreaId = 1;
+	string ShipRouteAreaCode = 2;
+	string ShipRouteAreaName = 3;
+	int64 ParentId = 4;
+	int64 TotalCount = 5;
+}

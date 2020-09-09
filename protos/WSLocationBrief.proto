@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+package XXY.UC2.GrpcLibrary;
+
+message WSLocationBrief{
+	int64 LocationId = 1;
+	string LocationNameEn = 2;
+	string LocationNameCn = 3;
+	int64 CityId = 4;
+}

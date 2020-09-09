@@ -1,0 +1,43 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service TrailerPriceByWeightService {
+	rpc FindFirstItemByDistrictAndWeight(TrailerPriceByWeightRequest) returns (TrailerPriceByWeightResponse) {}
+	rpc FindMostSpecifiedItemByLocationId(TrailerPriceByWeightRequest) returns (TrailerPriceByWeightResponse) {}
+	rpc GetTrailerPriceByWeightById(TrailerPriceByWeightRequest) returns (TrailerPriceByWeightResponse) {}
+	rpc GetTrailerPricesByWeightById(TrailerPriceByWeightRequest) returns (TrailerPriceByWeightResponse) {}
+	rpc GetTrailerPriceByWeightByLocationId(TrailerPriceByWeightRequest) returns (TrailerPriceByWeightResponse) {}
+}
+
+message TrailerPriceByWeightRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	int64 CountryId = 3;
+	int64 ProvinceId = 4;
+	int64 CityId = 5;
+	string ContaSize = 6;
+	int64 WeightPerUnit = 7;
+}
+
+message TrailerPriceByWeightResponse {
+	WSTrailerPriceByWeight Model = 1;
+	repeated WSTrailerPriceByWeight List = 2;
+}
+
+message WSTrailerPriceByWeight {
+	int64 BaseTrailerPriceByWeightId = 1;
+	int64 CityId = 2;
+	int64 ProvinceId = 3;
+	int64 CountryId = 4;
+	int64 GP20Lower = 5;
+	int64 GP20LowerDouble = 6;
+	int64 GP20Upper = 7;
+	int64 GP20UpperDouble = 8;
+	int64 GP40Lower = 9;
+	int64 GP40Upper = 10;
+	int64 GP45Lower = 11; 
+	int64 GP45Upper = 12;
+	string Remark = 13;
+	int64 WeightClass = 14;
+}

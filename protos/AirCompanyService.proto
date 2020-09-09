@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service AirCompanyService {
+	rpc GetAllAirCompanies(AirCompanyRequest) returns (AirCompanyResponse) {}
+}
+
+message AirCompanyRequest {
+}
+
+message AirCompanyResponse {
+	repeated WSAirCompany List = 1;
+}
+
+message WSAirCompany {
+	int64 CompanyId = 1;
+	string CompanyCode = 2;
+	string ScasCode = 3;
+	string CompanyNameCN = 4;
+	string CompanyNameEN = 5;
+	string CountryNameCN = 6;
+	string CountryNameEN = 7;
+}

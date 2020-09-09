@@ -1,0 +1,44 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+package XXY.UC2.GrpcLibrary;
+
+service CountryService {
+	rpc GetCountries(CountryRequest) returns (CountryResponse) {}
+	rpc GetCountryCount(CountryRequest) returns (CountryResponse) {}
+	rpc GetStatisticsCountries(CountryRequest) returns (CountryResponse) {}
+	rpc GetStatisticsAirportCountries(CountryRequest) returns (CountryResponse) {}
+	rpc GetCountryByCode(CountryRequest) returns (CountryResponse) {}
+	rpc GetCountryById(CountryRequest) returns (CountryResponse) {}
+	rpc GetCountriesByIds(CountryRequest) returns (CountryResponse) {}
+	rpc GetCountriessByNameIgnoreCase(CountryRequest) returns (CountryResponse) {}
+	rpc DistinguishCountryByName(CountryRequest) returns (CountryResponse) {}
+}
+
+message CountryRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	string CountryName = 3;
+	Pager Pager = 4;
+}
+
+message CountryResponse {
+	WSCountry Model = 1;
+	repeated WSCountry List = 2;
+	repeated WSCountryStatisticsBrief Statistics = 3;
+}
+
+message WSCountryStatisticsBrief {
+	int64 CountryId = 1;
+	string CountryCode = 2;
+	int64 TotalCount = 3;
+	string CountryNameCN = 4;
+	string CountryNameEn = 5;
+}
+
+message WSCountry {
+	int64 BaseCountryId = 1;
+	string CountryCode = 2;
+	string CountryNameEn = 3;
+	string CountryNameCn = 4;
+	string CountryFullName = 5;
+}

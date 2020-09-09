@@ -1,0 +1,37 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service AirlineService {
+	rpc GetAllAirCompanies(AirlineRequest) returns (AirlineResponse) {}
+	rpc GetAirlineById(AirlineRequest) returns (AirlineResponse) {}
+	rpc GetAirlineByIds(AirlineRequest) returns (AirlineResponse) {}
+	rpc GetAirlinesByName(AirlineRequest) returns (AirlineResponse) {}
+	rpc GetAirlinesByNameLike(AirlineRequest) returns (AirlineResponse) {}
+}
+
+message AirlineRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	string Name = 3;
+}
+
+message AirlineResponse {
+	WSAirlineCompnay Model = 1;
+	repeated WSAirlineCompnay List = 2;
+}
+
+message WSAirlineCompnay {
+	int64 CompanyClass = 1;
+	string CompanyCode = 2;
+	int64 CompanyId = 3;
+	string CompanyNameCn = 4;
+	string CompanyNameEn = 5;
+	string CompanyNameTw = 6;
+	string CompanyShortnameCn = 7;
+	string CompanyShortnameEn = 8;
+	string CompanyShortnameTw = 9;
+	string CompanyType = 10;
+	int64 Status = 11; 
+	int64 ParentId = 12;
+}

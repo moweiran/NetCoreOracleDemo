@@ -1,0 +1,33 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service BaseTrailerPriceService {
+	rpc GetTrailerPriceLevels(TrailerPriceLevelRequest) returns (TrailerPriceLevelResponse) {}
+	rpc GetTrailerPriceLevelById(TrailerPriceLevelRequest) returns (TrailerPriceLevelResponse) {}
+}
+
+message TrailerPriceLevelRequest {
+	int64 WeightLevelId = 1;
+	int64 CountryId = 2;
+	int64 ProvinceId = 3;
+	int64 CityId = 4;
+}
+
+message TrailerPriceLevelResponse {
+	NSLandTrailerPriceLevelInfo Model = 1;
+	repeated NSLandTrailerPriceLevelInfo List = 2;
+}
+
+message NSLandTrailerPriceLevelInfo {
+	int64 TrailerLevelId = 1;
+	int64 GP20Lower = 2;
+	int64 GP20LowerDouble = 3;
+	int64 GP20Upper = 4;
+	int64 GP20UpperDouble = 5;
+	int64 GP40Lower = 6;
+	int64 GP40Upper = 7;
+	int64 GP45Lower = 8;
+	int64 GP45Upper = 9;
+	int64 WeightClass = 10;
+}

@@ -1,0 +1,32 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service ContainerSizeTypeService {
+	rpc GetById(ContainerSizeTypeRequest) returns (ContainerSizeTypeResponse) {}
+	rpc GetByCode(ContainerSizeTypeRequest) returns (ContainerSizeTypeResponse) {}
+	rpc GetByIds(ContainerSizeTypeRequest) returns (ContainerSizeTypeResponse) {}
+	rpc GetAll(ContainerSizeTypeRequest) returns (ContainerSizeTypeResponse) {}
+}
+
+message ContainerSizeTypeRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	string Code = 3;
+}
+
+message ContainerSizeTypeResponse {
+	WSContaSizeType Model = 1;
+	repeated WSContaSizeType List = 2;
+}
+
+message WSContaSizeType {
+	int64 ContainerSizetypeId = 1;
+	string ContainerCode = 2;
+	string ContainerName = 3;
+	string ContainerSize = 4;
+	int64 ContainerType = 5;
+	string IsoCode = 6;
+	int64 Teu = 7;
+	int64 Uiindex = 8;
+}

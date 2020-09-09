@@ -1,0 +1,57 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+package XXY.UC2.GrpcLibrary;
+
+service HSCodeService {
+	rpc GetAllCategories(HSCodeRequest) returns (HSCodeResponse) {}
+	rpc GetHSCodeInfos(HSCodeRequest) returns (HSCodeResponse) {}
+	rpc GetHSCodeInfoCount(HSCodeRequest) returns (HSCodeResponse) {}
+	rpc GetHSCodeDetailById(HSCodeRequest) returns (HSCodeResponse) {}
+}
+
+message HSCodeRequest {
+	int64 Id = 1;
+	int64 CategoryId = 2;
+	string CodeOrName = 3;
+	Pager Pager = 4;
+}
+
+message HSCodeResponse {
+	HSCodeDetail Detail = 1;
+	repeated HSCodeInfoBrief BriefList = 2;
+	repeated HSCodeCategory CategoryList = 3;
+	int32 Count = 4;
+}
+
+message HSCodeDetail {
+	int64 HsCodeId = 1;
+	int64 HsCategoryId = 2;
+	string HsCode = 3;
+	string HsName = 4;
+	string Declaration = 5;
+	string Unit1 = 6;
+	string Unit2 = 7;
+	string ImportTaxMfn = 8;
+	string ImportTaxGeneral = 9;
+	string ImportTaxTemporary = 10;
+	string ConsumptionTax = 11; 
+	string ExportTax = 12;
+	string ExportRebateTax = 13;
+	string Vat = 14;
+	string CustomsSupervision = 15;
+	string InspectionCategory = 16;
+	string CommodityDesc = 17; 
+	string CommodityEname = 18;
+}
+message HSCodeInfoBrief {
+	int64 HsCodeId = 1;
+	int64 CategoryId = 2;
+	string HsCode = 3;
+	string HsName = 4;
+	string Declaration = 5;
+}
+message HSCodeCategory {
+	int64 CategoryId = 1;
+	int64 ParentId = 2;
+	string CategoryName = 3;
+}

@@ -1,0 +1,33 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+package XXY.UC2.GrpcLibrary;
+
+service ExpressCompanyService {
+	rpc GetExpressCompanyById(ExpressCompanyRequest) returns (ExpressCompanyResponse) {}
+	rpc GetExpressCompanyByIds(ExpressCompanyRequest) returns (ExpressCompanyResponse) {}
+	rpc GetAllExpressCompanies(ExpressCompanyRequest) returns (ExpressCompanyResponse) {}
+	rpc GetExpressSelection(ExpressCompanyRequest) returns (ExpressCompanyResponse) {}
+}
+
+message ExpressCompanyRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	string ExpressName = 3;
+	Pager Pager = 4;
+}
+
+message ExpressCompanyResponse {
+	WSExpressCompany Model = 1;
+	repeated WSExpressCompany List = 2;
+}
+
+message WSExpressCompany {
+	int64 CompanyId = 1;
+	string CompanyCode = 2;
+	string CompanyNameCn = 3;
+	string CompanyNameEn = 4;
+	string CompanyShortnameCn = 5;
+	string CompanyShortnameEn = 6;
+	string WebSite = 7;
+	string YDWCode = 8; 
+}

@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.13.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.31.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.23.2" />
+    <PackageReference Include="Grpc.Tools" Version="2.31.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="../../protos\AirCompanyService.proto" GrpcServices="Client" Link="Protos\AirCompanyService.proto" />
+    <Protobuf Include="../../protos\AirlineService.proto" GrpcServices="Client" Link="Protos\AirlineService.proto" />
+    <Protobuf Include="../../protos\BaseTrailerPriceService.proto" GrpcServices="Client" Link="Protos\BaseTrailerPriceService.proto" />
+    <Protobuf Include="../../protos\CarrierCompanyService.proto" GrpcServices="Client" Link="Protos\CarrierCompanyService.proto" />
+    <Protobuf Include="../../protos\CarrierService.proto" GrpcServices="Client" Link="Protos\CarrierService.proto" />
+    <Protobuf Include="../../protos\CityService.proto" GrpcServices="Client" Link="Protos\CityService.proto" />
+    <Protobuf Include="../../protos\ContainerLocationService.proto" GrpcServices="Client" Link="Protos\ContainerLocationService.proto" />
+    <Protobuf Include="../../protos\ContainerSizeTypeService.proto" GrpcServices="Client" Link="Protos\ContainerSizeTypeService.proto" />
+    <Protobuf Include="../../protos\CountryService.proto" GrpcServices="Client" Link="Protos\CountryService.proto" />
+    <Protobuf Include="../../protos\CurrencyService.proto" GrpcServices="Client" Link="Protos\CurrencyService.proto" />
+    <Protobuf Include="../../protos\DangerLevelService.proto" GrpcServices="Client" Link="Protos\DangerLevelService.proto" />
+    <Protobuf Include="../../protos\DistrictService.proto" GrpcServices="Client" Link="Protos\DistrictService.proto" />
+    <Protobuf Include="../../protos\ExpressCompanyService.proto" GrpcServices="Client" Link="Protos\ExpressCompanyService.proto" />
+    <Protobuf Include="../../protos\FbaReposService.proto" GrpcServices="Client" Link="Protos\FbaReposService.proto" />
+    <Protobuf Include="../../protos\FeetypeService.proto" GrpcServices="Client" Link="Protos\FeetypeService.proto" />
+    <Protobuf Include="../../protos\HSCodeService.proto" GrpcServices="Client" Link="Protos\HSCodeService.proto" />
+    <Protobuf Include="../../protos\LocationService.proto" GrpcServices="Client" Link="Protos\LocationService.proto" />
+    <Protobuf Include="../../protos\ModuleService.proto" GrpcServices="Client" Link="Protos\ModuleService.proto" />
+    <Protobuf Include="../../protos\Pager.proto" GrpcServices="Client" Link="Protos\Pager.proto" />
+    <Protobuf Include="../../protos\ProvinceService.proto" GrpcServices="Client" Link="Protos\ProvinceService.proto" />
+    <Protobuf Include="../../protos\RouteAreaCityService.proto" GrpcServices="Client" Link="Protos\RouteAreaCityService.proto" />
+    <Protobuf Include="../../protos\RouteAreaService.proto" GrpcServices="Client" Link="Protos\RouteAreaService.proto" />
+    <Protobuf Include="../../protos\SimpleUCCompany.proto" GrpcServices="Client" Link="Protos\SimpleUCCompany.proto" />
+    <Protobuf Include="../../protos\TrailerPriceByWeightService.proto" GrpcServices="Client" Link="Protos\TrailerPriceByWeightService.proto" />
+    <Protobuf Include="../../protos\WSLocation.proto" GrpcServices="Client" Link="Protos\WSLocation.proto" />
+    <Protobuf Include="../../protos\WSLocationBrief.proto" GrpcServices="Client" Link="Protos\WSLocationBrief.proto" />
+    <Protobuf Include="Protos\greet.proto" GrpcServices="Client" />
+  </ItemGroup>
+</Project>

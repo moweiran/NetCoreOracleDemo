@@ -1,0 +1,23 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+message WSLocation {
+	int64 LocationId = 1;
+	string LocationNameEn = 2;
+	string LocationNameCn = 3;
+	int64 CityId = 4;
+	string CityNameCN = 5;
+	string CityNameEN = 6;
+	int64 ProvinceId = 7;
+	string ProvinceNameCN = 8;
+	string ProvinceNameEN = 9;
+	int64 CountryId = 10;
+	string CountryCode = 11;
+	string CountryNameCN = 12;
+	string CountryNameEN = 13;
+	string LocationFullName = 14;
+	string LocationFullEName = 15;
+	string LocationCode = 16;
+	string YDWCode = 17;
+}

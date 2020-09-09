@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+message SimpleUCCompany {
+	int64 CompanyClass = 1;
+	string CompanyCode = 2;
+	int64 CompanyId = 3;
+	string CompanyNameCn = 4;
+	string CompanyNameEn = 5;
+	string CompanyNameTw = 6;
+	string CompanyShortnameCn = 7;
+	string CompanyShortnameEn = 8;
+	string CompanyShortnameTw = 9;
+	string CompanyType = 10;
+	int64 ParentId = 11;
+	int64 Status = 12;
+	string WebSite = 13;
+	string YDWCode = 14;
+}

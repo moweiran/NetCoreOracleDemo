@@ -1,0 +1,51 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+package XXY.UC2.GrpcLibrary;
+
+service FeetypeService {
+	rpc GetFeeTypeById(FeetypeRequest) returns (FeetypeResponse) {}
+	rpc GetFeeTypes(FeetypeRequest) returns (FeetypeResponse) {}
+	rpc GetFeeTypeByCode(FeetypeRequest) returns (FeetypeResponse) {}
+}
+
+message FeetypeRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	string Name = 3;
+	string Code = 4;
+	AppliedType AppliedType = 5;
+	Pager Pager = 6;
+}
+
+message FeetypeResponse {
+	WSFeeType Model = 1;
+	repeated WSFeeType List = 2;
+}
+
+message WSFeeType {
+	int64 CompanyClass = 1;
+	string CompanyCode = 2;
+	int64 CompanyId = 3;
+	string CompanyNameCn = 4;
+	string CompanyNameEn = 5;
+	string CompanyNameTw = 6;
+	string CompanyShortnameCn = 7;
+	string CompanyShortnameEn = 8;
+	string CompanyShortnameTw = 9;
+	string CompanyType = 10;
+	int64 Status = 11; 
+	int64 ParentId = 12;
+}
+
+
+enum AppliedType {
+	UNVALID = 0;
+	OFCL = 1;
+	OLCL = 2;
+	Air = 3;
+	ECL = 4;
+	IS_RFCL = 5;
+	IS_RLCL = 6;
+	IS_TRAILER = 7;
+	IS_CUSTOMS = 8;	 
+}

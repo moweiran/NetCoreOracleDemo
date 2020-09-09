@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service CurrencyService {
+	rpc GetCurrencyById(CurrencyRequest) returns (CurrencyResponse) {}
+	rpc GetCurrencies(CurrencyRequest) returns (CurrencyResponse) {}
+}
+
+message CurrencyRequest {
+	int64 CurrencyId = 1;
+}
+
+message CurrencyResponse {
+	WSCurrency Model = 1;
+	repeated WSCurrency List = 2;
+}
+
+message WSCurrency {
+	int64 BaseCurrencyId = 1;
+	string CurrencyCode = 2;
+	int64 CountryId = 3;
+	string CurrencyFullname = 4;
+	string CurrencyName = 5;
+}

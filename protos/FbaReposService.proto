@@ -1,0 +1,50 @@
+﻿syntax = "proto3";
+import "Pager.proto";
+package XXY.UC2.GrpcLibrary;
+
+service FbaReposService {
+	rpc GetReposByFbaIds(FbaReposRequest) returns (FbaReposResponse) {}
+	rpc GetReposExceptFbaIds(FbaReposRequest) returns (FbaReposResponse) {}
+	rpc GetReposByFbaId(FbaReposRequest) returns (FbaReposResponse) {}
+	rpc GetReposByCountryId(FbaReposRequest) returns (FbaReposResponse) {}
+	rpc GetReposByCountryIds(FbaReposRequest) returns (FbaReposResponse) {}
+	rpc GetFbaRepos(FbaReposRequest) returns (FbaReposResponse) {}
+	rpc GetFbaRepoByCode(FbaReposRequest) returns (FbaReposResponse) {}
+	rpc GetFbaReposByCode(FbaReposRequest) returns (FbaReposResponse) {}
+	rpc GetFbaRepoCountrySummaries(FbaReposRequest) returns (FbaReposResponse) {}
+}
+
+message FbaReposRequest {
+	int64 FbaId = 1;
+	repeated int64 FbaIds = 2;
+	string FbaRepoCode = 3;
+	Pager Pager = 4;
+	int64 CountryId = 5;
+	repeated int64 CountryIds = 6;
+}
+
+message FbaReposResponse {
+	WSFbaRepos Model = 1;
+	repeated WSFbaRepos List = 2;
+	repeated WSFbaRepoCountrySummary Summary = 3;
+}
+
+message WSFbaRepos {
+	int64 CompanyClass = 1;
+	string CompanyCode = 2;
+	int64 CompanyId = 3;
+	string CompanyNameCn = 4;
+	string CompanyNameEn = 5;
+	string CompanyNameTw = 6;
+	string CompanyShortnameCn = 7;
+	string CompanyShortnameEn = 8;
+	string CompanyShortnameTw = 9;
+	string CompanyType = 10;
+	int64 Status = 11; 
+	int64 ParentId = 12;
+}
+
+message WSFbaRepoCountrySummary{
+	int64 CountryId = 1;
+	int32 RepoCount = 2;
+}

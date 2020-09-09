@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+import "SimpleUCCompany.proto";
+package XXY.UC2.GrpcLibrary;
+
+service CarrierCompanyService {
+	rpc GetBySeq(CarrierCompanyRequest) returns (CarrierCompanyResponse) {}
+	rpc GetBySeqs(CarrierCompanyRequest) returns (CarrierCompanyResponse) {}
+	rpc GetSubCompanyIdList(CarrierCompanyRequest) returns (CarrierCompanyResponse) {}
+	rpc GetAreaAndSalesCompaniesByCarrierId(CarrierCompanyRequest) returns (CarrierCompanyResponse) {}
+}
+
+message CarrierCompanyRequest {
+	int64 Id = 1;
+	repeated int64 Ids = 2;
+	int64 CompanyId = 3;
+	bool WithSelf = 4;
+	int64 CarrierId = 5;
+}
+
+message CarrierCompanyResponse {
+	SimpleUCCompany Model = 1;
+	repeated SimpleUCCompany List = 2;
+}
+

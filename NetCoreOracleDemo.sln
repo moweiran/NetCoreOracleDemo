@@ -16,11 +16,41 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C8F94EC9-A
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcGreeter", "GrpcGreeter\GrpcGreeter.csproj", "{7FDA7BB7-2E99-48CC-97E7-4EAB940939AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcGreeter", "src\GrpcGreeter\GrpcGreeter.csproj", "{7FDA7BB7-2E99-48CC-97E7-4EAB940939AA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcGreeterClient", "GrpcGreeterClient\GrpcGreeterClient.csproj", "{087F9581-839E-4385-86E6-29C3DBFAF867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcGreeterClient", "src\GrpcGreeterClient\GrpcGreeterClient.csproj", "{087F9581-839E-4385-86E6-29C3DBFAF867}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStandard", "NetStandard\NetStandard.csproj", "{33326D71-013C-4F1D-883D-0993EC3A8E6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetStandard", "src\NetStandard\NetStandard.csproj", "{33326D71-013C-4F1D-883D-0993EC3A8E6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{8659B2FE-E31A-44DF-8F59-E538EF1F05AC}"
+	ProjectSection(SolutionItems) = preProject
+		protos\AirCompanyService.proto = protos\AirCompanyService.proto
+		protos\AirlineService.proto = protos\AirlineService.proto
+		protos\BaseTrailerPriceService.proto = protos\BaseTrailerPriceService.proto
+		protos\CarrierCompanyService.proto = protos\CarrierCompanyService.proto
+		protos\CarrierService.proto = protos\CarrierService.proto
+		protos\CityService.proto = protos\CityService.proto
+		protos\ContainerLocationService.proto = protos\ContainerLocationService.proto
+		protos\ContainerSizeTypeService.proto = protos\ContainerSizeTypeService.proto
+		protos\CountryService.proto = protos\CountryService.proto
+		protos\CurrencyService.proto = protos\CurrencyService.proto
+		protos\DangerLevelService.proto = protos\DangerLevelService.proto
+		protos\DistrictService.proto = protos\DistrictService.proto
+		protos\ExpressCompanyService.proto = protos\ExpressCompanyService.proto
+		protos\FbaReposService.proto = protos\FbaReposService.proto
+		protos\FeetypeService.proto = protos\FeetypeService.proto
+		protos\HSCodeService.proto = protos\HSCodeService.proto
+		protos\LocationService.proto = protos\LocationService.proto
+		protos\ModuleService.proto = protos\ModuleService.proto
+		protos\Pager.proto = protos\Pager.proto
+		protos\ProvinceService.proto = protos\ProvinceService.proto
+		protos\RouteAreaCityService.proto = protos\RouteAreaCityService.proto
+		protos\RouteAreaService.proto = protos\RouteAreaService.proto
+		protos\SimpleUCCompany.proto = protos\SimpleUCCompany.proto
+		protos\TrailerPriceByWeightService.proto = protos\TrailerPriceByWeightService.proto
+		protos\WSLocation.proto = protos\WSLocation.proto
+		protos\WSLocationBrief.proto = protos\WSLocationBrief.proto
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,48 @@
+﻿syntax = "proto3";
+
+package XXY.UC2.GrpcLibrary;
+
+service RouteAreaCityService {
+	rpc GetRouteAreaCityByCityId(RouteAreaCityRequest) returns (RouteAreaCityResponse) {}
+	rpc GetPortRouteArea(RouteAreaCityRequest) returns (RouteAreaCityResponse) {}
+	rpc GetAirportRouteArea(RouteAreaCityRequest) returns (RouteAreaCityResponse) {}
+}
+
+message RouteAreaCityRequest {
+	int64 CityId = 1;
+	int64 PortId = 2;
+	int64 RouteAreaId = 3;
+	int64 CountryId = 4;
+}
+
+message RouteAreaCityResponse {
+	WSRouteAreaCity Model = 1;
+	repeated WSPortRouteArea List = 2;
+}
+
+message WSRouteAreaCity {
+	int64 ShipRouteAreaCityId = 1;
+	int64 ShipRouteAreaId = 2;
+	string ShipRouteAreaCode = 3;
+	int64 CityId = 4;
+	string CityNameEn = 5;
+	string CityNameCn = 6;
+	string CountryCode = 7;
+	string CountryName = 8;
+}
+message WSPortRouteArea {
+	string CityNameCN = 1;
+	string CityNameEN = 2;
+	int64 CountryId = 3;
+	string CountryNameCN = 4;
+	string CountryNameEN = 5;
+	string LocationCode = 6;
+	int64 LocationId = 7;
+	string LocationNameCN = 8;
+	string LocationNameEN = 9;
+	string ProvinceNameCN = 10;
+	string ProvinceNameEN = 11; 
+	string ShipRouteAreaCode = 12;
+	int64 ShipRouteAreaId = 13; 
+	string ShipRouteAreaName = 14;
+}

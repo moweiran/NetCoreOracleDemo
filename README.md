@@ -31,3 +31,13 @@ gRPC 的主要优点是：
 需要处理流式处理请求或响应的点对点实时服务。
 
 Azure 应用服务或 IIS 当前不支持 ASP.NET Core gRPC。 Http.Sys 的 HTTP/2 实现不支持 gRPC 依赖的 HTTP 响应尾随标头。
+
+安装工具
+dotnet tool install -g dotnet-grpc
+
+先定位到Service
+dotnet grpc add-file ../../protos/*.proto -S Service
+
+定位到Client
+
+dotnet grpc add-file ../../protos/*.proto -S Client
