@@ -20,3 +20,7 @@ optionsBuilder.UseOracle("User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:
 <#@ assembly name="C:\Users\Administrator\.nuget\packages\oracle.manageddataaccess.core\2.19.80\lib\netstandard2.0\Oracle.ManagedDataAccess.dll" #>
 ```
 
+## 5. Oracle EntityFramework Core
+当使用FromSqlRaw方法，无法使用Single,SingleOrDefault,First,FirstOrDerault等方法
+## 6. Oracle 分页
+Skip,Take需要设置UseOracleSQLCompatibility

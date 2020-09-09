@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "User Id=UC2;Password=UC2;Data Source=192.168.0.44:1521/orcl.xxy.com;" Oracle.EntityFrameworkCore -Context "UC2Context"  -OutputDir Models -Force -UseDatabaseNames -Project "UC2OracleDataContext" -StartupProject "UC2OracleDataContext"

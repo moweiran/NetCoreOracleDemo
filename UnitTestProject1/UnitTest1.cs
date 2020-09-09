@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using UC2OracleDataContext;
+using UC2OracleDataContext.Models;
 
 namespace UnitTestProject1
 {
@@ -16,28 +18,24 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod1()
         {
-            using (var db = new CARGOContext())
-            {
-                var query = from o in db.BASE_COMPANY
-                            where o.DELETE_MARK != 1
-                            select new BaseCompany
-                            {
-                                CompanyId = o.COMPANY_ID,
-                                CompanyNameCN = o.COMPANY_NAME_CN,
-                            };
-                var list = query.Take(10).ToList();
-            }
+            using var db = new CARGOContext(new DbContextOptions<CARGOContext>());
+            var query = from o in db.BASE_COMPANY
+                        where o.DELETE_MARK != 1
+                        select new BaseCompany
+                        {
+                            CompanyId = o.COMPANY_ID,
+                            CompanyNameCN = o.COMPANY_NAME_CN,
+                        };
+            var list = query.Take(10).ToList();
         }
 
         [TestMethod]
         public void AddCustomer()
         {
-            using (var db = new CARGOContext())
-            {
-                var user = new BASE_USERINFO();
-                //db.Database.ex
-                //user.USER_ID =
-            }
+            using var db = new CARGOContext(new DbContextOptions<CARGOContext>());
+            //var user = new BASE_USERINFO();
+            //db.Database.ex
+            //user.USER_ID =
         }
 
         //public static decimal GetNextVal(this DbContext ctx, string seqName)
@@ -139,18 +137,51 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestExecuteSqlQuery()
         {
-
+            using var db = new CARGOContext(new DbContextOptions<CARGOContext>());
+            var seqName = "BASE_ALLIANCE_SEQ";
+            var query = $"SELECT {seqName}.NEXTVAL AS ID FROM DUAL;";
+            var result = db.EntityIdentified.FromSqlRaw(query).ToList();
         }
 
         [TestMethod]
         public void Test1()
         {
-            using (var db = new CARGOContext())
-            {
-                var seqName = "BASE_ALLIANCE_SEQ";
-                var query = string.Format("SELECT {0}.NEXTVAL FROM DUAL", seqName);
-                var result = db.ExecuteScalar<decimal>(query);
-            }
+            using var db = new CARGOContext(new DbContextOptions<CARGOContext>());
+            var seqName = "BASE_ALLIANCE_SEQ";
+            var query = string.Format("SELECT {0}.NEXTVAL FROM DUAL", seqName);
+            var result = db.ExecuteScalar<decimal>(query);
+        }
+
+        [TestMethod]
+        public void Add()
+        {
+            var options = new DbContextOptions<UC2Context>();
+            using var db = new UC2Context(options);
+            var query = $"SELECT {Sequences.BASE_LOCATION_SEQ.ToString()}.NEXTVAL AS ID FROM DUAL;";
+            var id = db.EntityIdentified.FromSqlRaw(query).ToList();
+            var entity = db.BASE_LOCATION.Where(q => q.BASE_LOCATION_ID == 111).SingleOrDefault();
+            //var id = db.GetNextVal(Sequences.NAVIGATION_SEQ); 
+            //var entity = new BASE_NAVIGATION();
+            //entity.NAVIGATION_ID = db.GetNextVal(Sequences.NAVIGATION_SEQ);
+            //var id = db.ENTITY_IDENTIFY.GetNextVal(Sequences.NAVIGATION_SEQ);
+            //entity.USER_ID = 0;
+            //entity.NAVIGATION_NAME = "test";
+            //entity.NAVIGATE_URL = "urltest";
+            //db.BASE_NAVIGATION.Add(entity);
+            //db.SaveChanges();
+        }
+
+        [TestMethod]
+        public void TestPagination()
+        {
+            //UseOracleSQLCompatibility("11");
+            using var db = new UC2Context(new DbContextOptions<UC2Context>());
+
+            var query = from o in db.BASE_LOCATION
+                        orderby o.BASE_LOCATION_ID descending
+                        select o;
+            var skipQuery = query.Skip(0).Take(10);
+            var resultQuery = skipQuery.ToList();
         }
     }
 }

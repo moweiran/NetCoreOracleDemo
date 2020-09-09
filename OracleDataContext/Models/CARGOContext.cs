@@ -6,7 +6,6 @@ namespace OracleDataContext.Models
 {
     public partial class CARGOContext : DbContext
     {
-        public CARGOContext() { }
         public CARGOContext(DbContextOptions<CARGOContext> options)
             : base(options)
         {
