@@ -3,11 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OracleDataContext", "OracleDataContext\OracleDataContext.csproj", "{B2A59522-AF17-4DA5-83C2-9074C65F1753}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OracleDataContext", "src\OracleDataContext\OracleDataContext.csproj", "{B2A59522-AF17-4DA5-83C2-9074C65F1753}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{84C44711-E803-4165-9F45-57576679384B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestProject1", "src\UnitTestProject1\UnitTestProject1.csproj", "{84C44711-E803-4165-9F45-57576679384B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UC2OracleDataContext", "UC2OracleDataContext\UC2OracleDataContext.csproj", "{C53AC229-93B5-4794-8D5A-A6621062E98B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UC2OracleDataContext", "src\UC2OracleDataContext\UC2OracleDataContext.csproj", "{C53AC229-93B5-4794-8D5A-A6621062E98B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4E4D7B04-87FF-4F6A-AAF2-856037067B4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{C8F94EC9-A32C-40CA-962E-31AE38C76BDF}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcGreeter", "GrpcGreeter\GrpcGreeter.csproj", "{7FDA7BB7-2E99-48CC-97E7-4EAB940939AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcGreeterClient", "GrpcGreeterClient\GrpcGreeterClient.csproj", "{087F9581-839E-4385-86E6-29C3DBFAF867}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +38,24 @@ Global
 		{C53AC229-93B5-4794-8D5A-A6621062E98B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C53AC229-93B5-4794-8D5A-A6621062E98B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C53AC229-93B5-4794-8D5A-A6621062E98B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FDA7BB7-2E99-48CC-97E7-4EAB940939AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FDA7BB7-2E99-48CC-97E7-4EAB940939AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FDA7BB7-2E99-48CC-97E7-4EAB940939AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FDA7BB7-2E99-48CC-97E7-4EAB940939AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{087F9581-839E-4385-86E6-29C3DBFAF867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{087F9581-839E-4385-86E6-29C3DBFAF867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{087F9581-839E-4385-86E6-29C3DBFAF867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{087F9581-839E-4385-86E6-29C3DBFAF867}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B2A59522-AF17-4DA5-83C2-9074C65F1753} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
+		{84C44711-E803-4165-9F45-57576679384B} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
+		{C53AC229-93B5-4794-8D5A-A6621062E98B} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
+		{7FDA7BB7-2E99-48CC-97E7-4EAB940939AA} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
+		{087F9581-839E-4385-86E6-29C3DBFAF867} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD1639BC-BB93-44E2-A227-139ECFCF60D6}
