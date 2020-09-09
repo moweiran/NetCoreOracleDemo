@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class BASE_AIR_LINERTRACK
     {

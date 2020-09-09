@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class FF_HOMEPAGE_CONFIGURE
     {
@@ -53,5 +53,12 @@ namespace ClassLibrary1.Models
         public bool? IS_SHOW_CARGOTRACK { get; set; }
         public decimal? UI_INDEX_CARGOTRACK { get; set; }
         public decimal? RATE_FILE_ID { get; set; }
+        public bool? IS_SHOW_AIR_RATE { get; set; }
+        public bool? IS_SHOW_ECL_RATE { get; set; }
+        public bool? IS_SHOW_FBA_RATE { get; set; }
+        public bool? IS_SHOW_RTFCL_RATE { get; set; }
+        public bool? IS_SHOW_RTLCL_RATE { get; set; }
+        public bool? IS_SHOW_FCL_RATE { get; set; }
+        public bool? IS_SHOW_LCL_RATE { get; set; }
     }
 }

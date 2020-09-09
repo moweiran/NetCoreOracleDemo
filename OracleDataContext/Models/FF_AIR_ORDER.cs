@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class FF_AIR_ORDER
     {
@@ -82,6 +82,8 @@ namespace ClassLibrary1.Models
         public decimal? COMMISSION_RATE { get; set; }
         public int? CONTAINER_COUNT { get; set; }
         public decimal? TOTAL_AMOUNT { get; set; }
+        public decimal? BL_STATUS { get; set; }
+        public decimal? SI_STATUS { get; set; }
 
         public virtual ICollection<FF_AIR_ORDER_BOOKING> FF_AIR_ORDER_BOOKING { get; set; }
         public virtual ICollection<FF_AIR_ORDER_CHARGE> FF_AIR_ORDER_CHARGE { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class CARGOTRACK_E_BK
     {
@@ -15,5 +15,7 @@ namespace ClassLibrary1.Models
         public string LAST_EVENT { get; set; }
         public string LAST_UPDATETIME { get; set; }
         public string TRACKINFO_JSONSTR { get; set; }
+        public string COURIER_ID { get; set; }
+        public string EXTRA_AWB_CODE { get; set; }
     }
 }

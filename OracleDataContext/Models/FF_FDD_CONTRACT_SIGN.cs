@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class FF_FDD_CONTRACT_SIGN
     {

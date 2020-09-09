@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class BASE_COMPANY_STRIPE
     {
@@ -26,5 +26,6 @@ namespace ClassLibrary1.Models
         public string SOURCE_ID { get; set; }
         public decimal? PAY_TYPE { get; set; }
         public string PAYMENT_METHOD_ID { get; set; }
+        public decimal? SUB_PACKAGE_TYPE { get; set; }
     }
 }

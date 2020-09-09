@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class FF_PAY_INFO
     {
@@ -24,5 +24,6 @@ namespace ClassLibrary1.Models
         public decimal? CREATE_USERID { get; set; }
         public string CREATE_FULLNAME { get; set; }
         public decimal? AMOUNT_SERVICEFEE { get; set; }
+        public decimal? THUNES_PAYMENT_ID { get; set; }
     }
 }

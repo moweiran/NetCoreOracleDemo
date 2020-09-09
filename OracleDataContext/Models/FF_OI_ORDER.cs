@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class FF_OI_ORDER
     {
@@ -32,7 +32,7 @@ namespace ClassLibrary1.Models
         public string CONSIGNEE_DESC { get; set; }
         public decimal? NOTIFIER_ID { get; set; }
         public string NOTIFIER_DESC { get; set; }
-        public decimal ROUTE_ID { get; set; }
+        public decimal? ROUTE_ID { get; set; }
         public string ROUTE_CODE { get; set; }
         public decimal SCHEDULE_TYPE { get; set; }
         public decimal SCHEDULE_ID { get; set; }
@@ -73,5 +73,6 @@ namespace ClassLibrary1.Models
         public decimal? CREATE_USERID { get; set; }
         public string CREATE_FULLNAME { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
+        public string DELIVERYTO { get; set; }
     }
 }

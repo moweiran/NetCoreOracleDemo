@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class BOOKING_ORDER_CONTAINER
     {
@@ -47,7 +47,5 @@ namespace ClassLibrary1.Models
         public DateTime? DELETE_DATE { get; set; }
         public decimal? TEU { get; set; }
         public decimal? PRESALE_ORDER_ID { get; set; }
-
-        public virtual BOOKING_ORDER BOOKING_ORDER_ { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class FF_PAY_DETAIL
     {
@@ -22,5 +22,13 @@ namespace ClassLibrary1.Models
         public decimal? AMOUNT_SERVICEFEE { get; set; }
         public decimal? RATE_COMMISSION { get; set; }
         public decimal? AMOUNT_SUBSIDY { get; set; }
+        public decimal? MODE_TYPE { get; set; }
+        public string SOURCE_COUNTRY { get; set; }
+        public string SOURCE_CURRENCY { get; set; }
+        public decimal? SOURCE_AMOUNT { get; set; }
+        public string DESTINATION_COUNTRY { get; set; }
+        public string DESTINATION_CURRENCY { get; set; }
+        public decimal? DESTINATION_AMOUNT { get; set; }
+        public decimal? FXRATE { get; set; }
     }
 }

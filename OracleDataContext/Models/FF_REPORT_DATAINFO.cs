@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class FF_REPORT_DATAINFO
     {
@@ -21,5 +21,6 @@ namespace ClassLibrary1.Models
         public string CREATE_FULL_NAME { get; set; }
         public DateTime CREATE_DATE_TIME { get; set; }
         public bool? ISCREDITNOTE { get; set; }
+        public decimal? LOA_TYPE { get; set; }
     }
 }

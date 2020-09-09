@@ -1,7 +1,8 @@
-using ClassLibrary1.Models;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Oracle.ManagedDataAccess.Client;
+using OracleDataContext.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -34,6 +35,7 @@ namespace UnitTestProject1
             using (var db = new CARGOContext())
             {
                 var user = new BASE_USERINFO();
+                //db.Database.ex
                 //user.USER_ID =
             }
         }
@@ -116,5 +118,39 @@ namespace UnitTestProject1
             return descs;
         }
 
+        [TestMethod]
+        public void TestConnectionManager()
+        {
+            IDbConnection conn = ConnectionManager.GetConnection();
+            ConnectionManager.CloseConnection(conn);
+        }
+
+        [TestMethod]
+        public void TestExecuteAction()
+        {
+            var seqName = "BASE_ALLIANCE_SEQ";
+            var query = string.Format("SELECT {0}.NEXTVAL FROM DUAL", seqName);
+            IDbConnection connection = ConnectionManager.GetConnection();
+            var result = connection.QueryFirst<decimal>(query);
+            ConnectionManager.CloseConnection(connection);
+
+        }
+
+        [TestMethod]
+        public void TestExecuteSqlQuery()
+        {
+
+        }
+
+        [TestMethod]
+        public void Test1()
+        {
+            using (var db = new CARGOContext())
+            {
+                var seqName = "BASE_ALLIANCE_SEQ";
+                var query = string.Format("SELECT {0}.NEXTVAL FROM DUAL", seqName);
+                var result = db.ExecuteScalar<decimal>(query);
+            }
+        }
     }
 }

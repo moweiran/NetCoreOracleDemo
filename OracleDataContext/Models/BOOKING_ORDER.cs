@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class BOOKING_ORDER
     {
         public BOOKING_ORDER()
         {
-            BOOKING_ORDER_CONTAINER = new HashSet<BOOKING_ORDER_CONTAINER>();
             BOOKING_ORDER_OTHER = new HashSet<BOOKING_ORDER_OTHER>();
             BOOKING_ORDER_RATE = new HashSet<BOOKING_ORDER_RATE>();
             BOOKING_ORDER_SURCHARGE = new HashSet<BOOKING_ORDER_SURCHARGE>();
@@ -131,8 +130,8 @@ namespace ClassLibrary1.Models
         public string CONTA_DESC { get; set; }
         public string LINKER_MOBILE { get; set; }
         public decimal? COMMISSION_RATE { get; set; }
+        public decimal? CALISTA_STATUS { get; set; }
 
-        public virtual ICollection<BOOKING_ORDER_CONTAINER> BOOKING_ORDER_CONTAINER { get; set; }
         public virtual ICollection<BOOKING_ORDER_OTHER> BOOKING_ORDER_OTHER { get; set; }
         public virtual ICollection<BOOKING_ORDER_RATE> BOOKING_ORDER_RATE { get; set; }
         public virtual ICollection<BOOKING_ORDER_SURCHARGE> BOOKING_ORDER_SURCHARGE { get; set; }

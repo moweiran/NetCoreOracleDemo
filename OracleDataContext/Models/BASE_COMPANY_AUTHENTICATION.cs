@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class BASE_COMPANY_AUTHENTICATION
     {
@@ -41,6 +41,6 @@ namespace ClassLibrary1.Models
         public DateTime CREATE_DATETIME { get; set; }
         public string COMPANY_WEBSITE { get; set; }
         public string COMPANY_CODE { get; set; }
-        public bool? IS_SUPER_PARTNER { get; set; }
+        public string COMPANY_CLASS { get; set; }
     }
 }

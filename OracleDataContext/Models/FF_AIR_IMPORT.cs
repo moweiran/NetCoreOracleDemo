@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class FF_AIR_IMPORT
     {
@@ -61,5 +61,6 @@ namespace ClassLibrary1.Models
         public decimal? CREATE_USERID { get; set; }
         public string CREATE_FULLNAME { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
+        public string DELIVERYTO { get; set; }
     }
 }

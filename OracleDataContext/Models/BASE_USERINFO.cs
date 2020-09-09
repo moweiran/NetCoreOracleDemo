@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibrary1.Models
+namespace OracleDataContext.Models
 {
     public partial class BASE_USERINFO
     {
@@ -48,5 +48,6 @@ namespace ClassLibrary1.Models
         public string QQ_NO { get; set; }
         public string KEYCLOAKSUBJECT { get; set; }
         public DateTime? LATEST_LOGINTIME { get; set; }
+        public string MOBILE_COUNTRY_CODE { get; set; }
     }
 }
