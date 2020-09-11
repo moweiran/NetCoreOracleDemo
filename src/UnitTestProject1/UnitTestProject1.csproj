@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MySqlDataContext\MySqlDataContext.csproj" />
     <ProjectReference Include="..\OracleDataContext\OracleDataContext.csproj" />
     <ProjectReference Include="..\UC2OracleDataContext\UC2OracleDataContext.csproj" />
   </ItemGroup>
