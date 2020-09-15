@@ -2,11 +2,11 @@
 NetCoreOracleDemo
 ## 基本信息
 1. 安装组件包
-  1. 安装Oracle.EntityFrameworkCore2.19.70
-1.2 安装Oracle.ManagedDataAccess.Core2.19.70
-1.3 安装Microsoft.EntityFrameworkCore2.2.6
-1.4 安装Microsoft.EntityFrameworkCore.Relational2.2.6
-1.5 安装Microsoft.EntityFrameworkCore.Tools2.2.6
+  1. 安装Oracle.EntityFrameworkCore 3.19.80
+1.2 安装Oracle.ManagedDataAccess.Core 2.19.90
+1.3 安装Microsoft.EntityFrameworkCore 3.1.80
+1.4 安装Microsoft.EntityFrameworkCore.Relational 3.1.80
+1.5 安装Microsoft.EntityFrameworkCore.Tools 3.1.80
 2. DbFirst映射数据实体对象
 Scaffold-DbContext "User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:1521/ORCL;" Oracle.EntityFrameworkCore -Context "CARGOContext"  -OutputDir Models -Force -UseDatabaseNames
 3. 修改兼容性设置
@@ -35,8 +35,8 @@ Azure 应用服务或 IIS 当前不支持 ASP.NET Core gRPC。 Http.Sys 的 HTTP
 安装工具
 dotnet tool install -g dotnet-grpc
 
-先定位到Service
-dotnet grpc add-file ../../protos/*.proto -S Service
+先定位到Server
+dotnet grpc add-file ../../protos/*.proto -S Server
 
 定位到Client
 
