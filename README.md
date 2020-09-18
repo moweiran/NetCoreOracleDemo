@@ -41,3 +41,7 @@ dotnet grpc add-file ../../protos/*.proto -S Server
 定位到Client
 
 dotnet grpc add-file ../../protos/*.proto -S Client
+
+
+
+dotnet tool install --global dotnet-ef --version 3.1.4
