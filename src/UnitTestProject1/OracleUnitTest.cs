@@ -1,6 +1,7 @@
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MySql.Data.MySqlClient;
 using Oracle.ManagedDataAccess.Client;
 using OracleDataContext.Models;
 using System;
@@ -183,5 +184,38 @@ namespace UnitTestProject1
             var skipQuery = query.Skip(0).Take(10);
             var resultQuery = skipQuery.ToList();
         }
+
+        [TestMethod]
+        public void TestBulkInsertReturnIds()
+        {
+            Handle();
+        }
+
+        public void Handle()
+        {
+            var connStr = "server=localhost;port=3306;user=xxy;password=xxy@678.com;database=new_schema;SslMode=None;";
+            string query = @"Insert Into dogs(Name,Age,Delete_mark) values(@Name,@Age,@Delete_mark);
+                        SELECT CAST(LAST_INSERT_ID() AS UNSIGNED INTEGER);";
+            using var conn = new MySqlConnection(connStr);
+
+            conn.Open();
+            var dogs = new List<Dog>();
+            var dog = new Dog
+            {
+                Name = "1",
+                Age = 1,
+                Delete_mark = false
+            };
+            //var result = conn.Execute(query, dogs);
+            var result = conn.Query<int>(query, dog);
+            conn.Close();
+        }
+    }
+
+    class Dog
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public bool Delete_mark { get; set; }
     }
 }
