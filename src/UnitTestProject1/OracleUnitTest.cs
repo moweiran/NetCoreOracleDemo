@@ -1,5 +1,6 @@
 using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;
 using Oracle.ManagedDataAccess.Client;
@@ -210,6 +211,10 @@ namespace UnitTestProject1
             var result = conn.Query<int>(query, dog);
             conn.Close();
         }
+
+
+        
+
     }
 
     class Dog

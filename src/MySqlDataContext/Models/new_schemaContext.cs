@@ -6,15 +6,12 @@ namespace MySqlDataContext.Models
 {
     public partial class new_schemaContext : DbContext
     {
-        public new_schemaContext()
-        {
-        }
-
         public new_schemaContext(DbContextOptions<new_schemaContext> options)
             : base(options)
         {
         }
 
+        public virtual DbSet<Cats> Cats { get; set; }
         public virtual DbSet<Dogs> Dogs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,6 +25,15 @@ namespace MySqlDataContext.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Cats>(entity =>
+            {
+                entity.ToTable("cats");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Dogs>(entity =>
             {
                 entity.ToTable("dogs");
