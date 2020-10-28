@@ -8,7 +8,14 @@ NetCoreOracleDemo
 1.4 安装Microsoft.EntityFrameworkCore.Relational 3.1.80
 1.5 安装Microsoft.EntityFrameworkCore.Tools 3.1.80
 2. DbFirst映射数据实体对象
+
+
 Scaffold-DbContext "User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:1521/ORCL;" Oracle.EntityFrameworkCore -Context "CARGOContext"  -OutputDir Models -Force -UseDatabaseNames
+
+Mysql
+Scaffold-DbContext "server=192.168.0.46;port=13306;user=xxy;password=xxy@678.com;database=newship" MySql.Data.EntityFrameworkCore -Context "NewShipContext"  -OutputDir Models -Force -UseDatabaseNames -Project "PomeloMySqlDataContext"
+Scaffold-DbContext "server=192.168.0.46;port=13306;user=xxy;password=xxy@678.com;database=newship" Pomelo.EntityFrameworkCore.MySql -Context "NewShipContext"  -OutputDir Models -Force -UseDatabaseNames -Project "PomeloMySqlDataContext"
+
 3. 修改兼容性设置
 optionsBuilder.UseOracle("User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:1521/ORCL;", options =>
 {

@@ -51,8 +51,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Aop\Aop.csproj" />
-    <ProjectReference Include="..\MySqlDataContext\MySqlDataContext.csproj" />
     <ProjectReference Include="..\OracleDataContext\OracleDataContext.csproj" />
+    <ProjectReference Include="..\PomeloMySqlDataContext\PomeloMySqlDataContext.csproj" />
     <ProjectReference Include="..\UC2OracleDataContext\UC2OracleDataContext.csproj" />
     <ProjectReference Include="..\UnitTestBiz\UnitTestBiz.csproj" />
   </ItemGroup>

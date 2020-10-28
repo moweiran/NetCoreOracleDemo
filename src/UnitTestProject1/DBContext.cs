@@ -17,7 +17,7 @@ namespace UnitTestProject1
             {
                 if (_dbConnection == null)
                 {
-                    _dbConnection = new MySqlConnection(mySqlConnection);
+                    //_dbConnection = new MySqlConnection(mySqlConnection);
                     //if (MiniProfiler.Current != null)
                     //{
                     //    _dbConnection = new StackExchange.Profiling.Data.ProfiledDbConnection((DbConnection)_dbConnection, MiniProfiler.Current);

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySqlDataContext.Models;
+using PomeloMySqlDataContext.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,7 +85,112 @@ namespace UnitTestProject1
             dogManger.HandleAdd();
         }
 
+        [TestMethod]
+        public void PomeloMysqlTest()
+        {
+            using var db = new NewShipContext(new DbContextOptions<NewShipContext>());
+            var query = from ow in db.ow_surcharge
+                        join dtl in db.ow_surcharge_detail.Where(q => q.DELETE_MARK == false) on ow.OW_SURCHARGE_ID equals dtl.OW_SURCHARGE_ID into dtls
+                        where ow.CARRIER_ID == 9001
+                           && ow.OW_SURCHARGE_ID == 21
+                        select new OwSurchargeBrief
+                        {
+                            Id = ow.OW_SURCHARGE_ID,
+                            EffectiveDate = ow.EFFECTIVE_DATE,
+                            ExpirationDate = ow.EXPIRATION_DATE,
+                            OwType = ow.OW_TYPE,
+                            PolId = ow.POL_ID,
+                            RouteId = ow.ROUTE_ID,
+                            Remark = ow.REMARK,
+                            Details = dtls.Select(q => new OwSurchargeDetailBrief
+                            {
+                                Id = q.OW_SURCHARGE_DETAIL_ID,
+                                BeginWeight = q.BEGIN_WEIGHT,
+                                EndWeight = q.END_WEIGHT,
+                                Remark = q.REMARK,
+                                Surcharge = q.SURCHARGE_AMOUNT,
+                                ContaSizeType = q.CONTA_SIZETYPE,
+                            })
+                        };
 
+            var result = query.ToList().FirstOrDefault();
+        }
+
+        [TestMethod]
+        public void PomeloMysqlTest2()
+        {
+            using var db = new NewShipContext(new DbContextOptions<NewShipContext>());
+            var query = from ow in db.ow_surcharge
+                        where ow.CARRIER_ID == 9001
+                           && ow.OW_SURCHARGE_ID == 21
+                        select new OwSurchargeBrief
+                        {
+                            Id = ow.OW_SURCHARGE_ID,
+                            EffectiveDate = ow.EFFECTIVE_DATE,
+                            ExpirationDate = ow.EXPIRATION_DATE,
+                            OwType = ow.OW_TYPE,
+                            PolId = ow.POL_ID,
+                            RouteId = ow.ROUTE_ID,
+                            Remark = ow.REMARK,
+                            Details = db.ow_surcharge_detail.Where(q => q.DELETE_MARK == false && q.OW_SURCHARGE_ID == ow.OW_SURCHARGE_ID).Select(q => new OwSurchargeDetailBrief
+                            {
+                                Id = q.OW_SURCHARGE_DETAIL_ID,
+                                BeginWeight = q.BEGIN_WEIGHT,
+                                EndWeight = q.END_WEIGHT,
+                                Remark = q.REMARK,
+                                Surcharge = q.SURCHARGE_AMOUNT,
+                                ContaSizeType = q.CONTA_SIZETYPE,
+                            }).ToList()
+                        };
+
+            var result = query.ToList().FirstOrDefault();
+        }
+
+
+        [TestMethod]
+        public void PomeloMysqlTest3()
+        {
+            using var db = new NewShipContext(new DbContextOptions<NewShipContext>());
+            var query = from ow in db.ow_surcharge
+                        where ow.CARRIER_ID == 9001
+                            && ow.OW_SURCHARGE_ID == 21
+                        select new OwSurchargeBrief
+                        {
+                            Id = ow.OW_SURCHARGE_ID,
+                            EffectiveDate = ow.EFFECTIVE_DATE,
+                            ExpirationDate = ow.EXPIRATION_DATE,
+                            OwType = ow.OW_TYPE,
+                            PolId = ow.POL_ID,
+                            RouteId = ow.ROUTE_ID,
+                            Remark = ow.REMARK,
+                            Details = db.ow_surcharge_detail.Where(q => q.DELETE_MARK == false && q.OW_SURCHARGE_ID == ow.OW_SURCHARGE_ID).Select(q => new OwSurchargeDetailBrief
+                            {
+                                Id = q.OW_SURCHARGE_DETAIL_ID,
+                                BeginWeight = q.BEGIN_WEIGHT,
+                                EndWeight = q.END_WEIGHT,
+                                Remark = q.REMARK,
+                                Surcharge = q.SURCHARGE_AMOUNT,
+                                ContaSizeType = q.CONTA_SIZETYPE,
+                            }),
+                            ApplyToPods = db.ow_surcharge_port.Where(q => q.DELETE_MARK == false && q.OW_SURCHARGE_ID == ow.OW_SURCHARGE_ID).Select(q => new OwSurchargePortBrief
+                            {
+                                Id = q.OW_SURCHARGE_PORT_ID,
+                                Pod = new SimpleLocation
+                                {
+                                    LocationId = q.POD_ID
+                                }
+                            }),
+                            ApplyToSchedules = db.ow_surcharge_schedule.Where(q => q.DELETE_MARK == false && q.OW_SURCHARGE_ID == ow.OW_SURCHARGE_ID).Select(q => new OwSurchargeScheduleBrief
+                            {
+                                Id = q.OW_SURCHARGE_SCHEDULEL_ID,
+                                Etd = q.ETD,
+                                ScheduleId = q.SCHEDULE_ID,
+                                VesselVoyage = q.VESSELVOY,
+                            })
+                        };
+
+            var result = query.ToList().FirstOrDefault();
+        }
 
         /// <summary>
         /// 初始化 注入容器
@@ -116,5 +222,77 @@ namespace UnitTestProject1
             builder.Populate(services);
             return builder.Build();
         }
+    }
+    public class OwSurchargeBrief
+    {
+        public OwSurchargeBrief()
+        {
+            this.Details = new List<OwSurchargeDetailBrief>();
+            this.ApplyToPods = new List<OwSurchargePortBrief>();
+            this.ApplyToSchedules = new List<OwSurchargeScheduleBrief>();
+        }
+
+        public decimal Id { get; set; }
+
+        public decimal OwType { get; set; }
+
+        public DateTime? EffectiveDate { get; set; }
+
+        public DateTime? ExpirationDate { get; set; }
+
+        public string Remark { get; set; }
+
+        public decimal RouteId { get; set; }
+
+        public decimal PolId { get; set; }
+
+        public IEnumerable<OwSurchargeDetailBrief> Details { get; set; }
+
+        public IEnumerable<OwSurchargePortBrief> ApplyToPods { get; set; }
+
+        public IEnumerable<OwSurchargeScheduleBrief> ApplyToSchedules { get; set; }
+    }
+    public class OwSurchargeDetailBrief
+    {
+        public decimal Id { get; set; }
+
+        public string ContaSizeType { get; set; }
+
+        public decimal BeginWeight { get; set; }
+
+        public decimal EndWeight { get; set; }
+
+        public decimal? Surcharge { get; set; }
+
+        public string Remark { get; set; }
+    }
+
+    public class OwSurchargePortBrief
+    {
+        public decimal Id { get; set; }
+
+        public SimpleLocation Pod { get; set; }
+    }
+    public class OwSurchargeScheduleBrief
+    {
+        public decimal Id { get; set; }
+
+        public decimal ScheduleId { get; set; }
+
+        public string VesselVoyage { get; set; }
+
+        public DateTime? Etd { get; set; }
+    }
+    public class SimpleLocation
+    {
+        public decimal LocationId { get; set; }
+        public string LocationNameEN { get; set; }
+        public string LocationNameCN { get; set; }
+        public string CityNameEN { get; set; }
+        public string CityNameCN { get; set; }
+        public string ProvinceNameEN { get; set; }
+        public string ProvinceNameCN { get; set; }
+        public string CountryNameEN { get; set; }
+        public string CountryNameCN { get; set; }
     }
 }

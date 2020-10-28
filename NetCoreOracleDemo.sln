@@ -54,9 +54,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{8659B2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlDataContext", "src\MySqlDataContext\MySqlDataContext.csproj", "{30F0CC2A-CEFB-4DC9-916D-6FC05E424BB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestBiz", "src\UnitTestBiz\UnitTestBiz.csproj", "{40155DEC-6BF2-4078-B99F-F3917D4CE859}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestBiz", "src\UnitTestBiz\UnitTestBiz.csproj", "{40155DEC-6BF2-4078-B99F-F3917D4CE859}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aop", "src\Aop\Aop.csproj", "{D5E76217-F649-4F13-B42B-AEE21E5CE4AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aop", "src\Aop\Aop.csproj", "{D5E76217-F649-4F13-B42B-AEE21E5CE4AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PomeloMySqlDataContext", "src\PomeloMySqlDataContext\PomeloMySqlDataContext.csproj", "{1078A28F-77BB-417F-B592-8968BEDF6F07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,10 @@ Global
 		{D5E76217-F649-4F13-B42B-AEE21E5CE4AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5E76217-F649-4F13-B42B-AEE21E5CE4AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5E76217-F649-4F13-B42B-AEE21E5CE4AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1078A28F-77BB-417F-B592-8968BEDF6F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1078A28F-77BB-417F-B592-8968BEDF6F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1078A28F-77BB-417F-B592-8968BEDF6F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1078A28F-77BB-417F-B592-8968BEDF6F07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{30F0CC2A-CEFB-4DC9-916D-6FC05E424BB3} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
 		{40155DEC-6BF2-4078-B99F-F3917D4CE859} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
 		{D5E76217-F649-4F13-B42B-AEE21E5CE4AC} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
+		{1078A28F-77BB-417F-B592-8968BEDF6F07} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD1639BC-BB93-44E2-A227-139ECFCF60D6}
