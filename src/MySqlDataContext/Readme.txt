@@ -1,4 +1,3 @@
-﻿Scaffold-DbContext "server=localhost;port=3306;user=xxy;password=xxy@678.com;database=new_schema" MySql.Data.EntityFrameworkCore -OutputDir new_schema -f
-Scaffold-DbContext "server=localhost;port=3306;user=xxy;password=xxy@678.com;database=new_schema;TreatTinyAsBoolean=true" MySql.Data.EntityFrameworkCore -OutputDir Models -f
+﻿Scaffold-DbContext "server=192.168.0.46;port=13306;user=xxy;password=xxy@678.com;database=new_schema;TreatTinyAsBoolean=true" MySql.EntityFrameworkCore -OutputDir Models -Force -UseDatabaseNames -NoPluralize
 
-Scaffold-DbContext "server=localhost;port=3306;user=xxy;password=xxy@678.com;database=newship2;TreatTinyAsBoolean=true" MySql.Data.EntityFrameworkCore -OutputDir Models -f
+Scaffold-DbContext "server=192.168.0.46;port=13306;user=xxy;password=xxy@678.com;database=newship;TreatTinyAsBoolean=true" MySql.EntityFrameworkCore -OutputDir NewShip -Force -UseDatabaseNames -NoPluralize

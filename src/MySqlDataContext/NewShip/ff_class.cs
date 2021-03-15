@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
+namespace MySqlDataContext.NewShip
+{
+    public partial class ff_class
+    {
+        public long FF_CLASS_ID { get; set; }
+        public long CARRIER_ID { get; set; }
+        public string CARRIER_CODE { get; set; }
+        public string CARRIER_NAME { get; set; }
+        public long CARRIER_ID_SALE { get; set; }
+        public string CARRIER_CODE_SALE { get; set; }
+        public string CARRIER_NAME_SALE { get; set; }
+        public long FF_ID { get; set; }
+        public string FF_SHORTNAME { get; set; }
+        public string FF_NAME_EN { get; set; }
+        public string FF_NAME_CN { get; set; }
+        public int? COMPANY_TYPE { get; set; }
+        public long ROUTE_ID { get; set; }
+        public string ROUTE_CODE { get; set; }
+        public string ROUTE_NAME { get; set; }
+        public long FF_CLASS_SET_ID { get; set; }
+        public int ROUTE_CLASS_CODE { get; set; }
+        public string ROUTE_CLASS_NAME { get; set; }
+        public string REMARK { get; set; }
+        public bool VALID { get; set; }
+        public int? STATUS { get; set; }
+        public bool DELETE_MARK { get; set; }
+        public long? MODIFY_USERID { get; set; }
+        public string MODIFY_USERNAME { get; set; }
+        public string MODIFY_FULLNAME { get; set; }
+        public long? MODIFY_COMPANYID { get; set; }
+        public long? CREATE_USERID { get; set; }
+        public string CREATE_USERNAME { get; set; }
+        public string CREATE_FULLNAME { get; set; }
+        public long? CREATE_COMPANYID { get; set; }
+    }
+}

@@ -50,6 +50,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{8659B2
 		protos\WSLocationBrief.proto = protos\WSLocationBrief.proto
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySqlDataContext", "src\MySqlDataContext\MySqlDataContext.csproj", "{FB7EC13B-FFB7-432A-9DD7-1CB193FBE8DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{087F9581-839E-4385-86E6-29C3DBFAF867}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{087F9581-839E-4385-86E6-29C3DBFAF867}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{087F9581-839E-4385-86E6-29C3DBFAF867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB7EC13B-FFB7-432A-9DD7-1CB193FBE8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB7EC13B-FFB7-432A-9DD7-1CB193FBE8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB7EC13B-FFB7-432A-9DD7-1CB193FBE8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB7EC13B-FFB7-432A-9DD7-1CB193FBE8DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{C53AC229-93B5-4794-8D5A-A6621062E98B} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
 		{7FDA7BB7-2E99-48CC-97E7-4EAB940939AA} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
 		{087F9581-839E-4385-86E6-29C3DBFAF867} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
+		{FB7EC13B-FFB7-432A-9DD7-1CB193FBE8DA} = {4E4D7B04-87FF-4F6A-AAF2-856037067B4E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD1639BC-BB93-44E2-A227-139ECFCF60D6}
