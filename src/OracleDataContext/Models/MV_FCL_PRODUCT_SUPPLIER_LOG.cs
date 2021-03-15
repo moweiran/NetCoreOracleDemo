@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class MV_FCL_PRODUCT_SUPPLIER_LOG

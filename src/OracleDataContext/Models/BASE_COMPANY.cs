@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BASE_COMPANY
@@ -72,5 +74,7 @@ namespace OracleDataContext.Models
         public bool? IS_RAILWAYFCL_BANKER { get; set; }
         public bool? IS_RAILWAYLCL_BANKER { get; set; }
         public DateTime? LATEST_LOGINTIME { get; set; }
+        public string MARINEONLINE_OPEN_UID { get; set; }
+        public decimal? RECOMMEND_ALLIANCE_FF_ID { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class MV_SEARCH_SUPPLIER_FBARATE
@@ -55,5 +57,6 @@ namespace OracleDataContext.Models
         public string COMPANY_WEBSITE { get; set; }
         public bool? IS_CERTIFICATION { get; set; }
         public bool? IS_SUPER_PARTNER { get; set; }
+        public decimal? RECOMMEND_ALLIANCE_FF_ID { get; set; }
     }
 }

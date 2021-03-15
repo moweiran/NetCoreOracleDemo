@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BOOKING_ORDER_SI
@@ -50,5 +52,6 @@ namespace OracleDataContext.Models
         public string CREATE_FULLNAME { get; set; }
         public decimal? CREATE_COMPANYID { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
+        public decimal? APISHIPPINGINFOID { get; set; }
     }
 }

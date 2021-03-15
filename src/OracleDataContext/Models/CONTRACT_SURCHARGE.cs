@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class CONTRACT_SURCHARGE
@@ -32,6 +34,6 @@ namespace OracleDataContext.Models
         public DateTime CREATE_DATETIME { get; set; }
         public decimal FF_ID { get; set; }
 
-        public virtual CONTRACT_DETAIL CONTRACT_DETAIL_ { get; set; }
+        public virtual CONTRACT_DETAIL CONTRACT_DETAIL { get; set; }
     }
 }

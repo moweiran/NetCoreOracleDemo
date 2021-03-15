@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class ECL_PACK_CONTAINER_2_ORDER
@@ -11,6 +13,6 @@ namespace OracleDataContext.Models
         public decimal? CREATE_USERID { get; set; }
         public string CREATE_USERNAME { get; set; }
 
-        public virtual ECL_PACK_CONTAINER ECL_PACK_CONTAINER_ { get; set; }
+        public virtual ECL_PACK_CONTAINER ECL_PACK_CONTAINER { get; set; }
     }
 }

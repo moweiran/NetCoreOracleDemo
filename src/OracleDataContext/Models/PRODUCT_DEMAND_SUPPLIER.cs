@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class PRODUCT_DEMAND_SUPPLIER
@@ -42,6 +44,6 @@ namespace OracleDataContext.Models
         public decimal? POL_ID { get; set; }
         public decimal? POD_ID { get; set; }
 
-        public virtual PRODUCT_DEMAND PRODUCT_DEMAND_ { get; set; }
+        public virtual PRODUCT_DEMAND PRODUCT_DEMAND { get; set; }
     }
 }

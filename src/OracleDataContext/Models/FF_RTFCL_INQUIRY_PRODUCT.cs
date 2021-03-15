@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_RTFCL_INQUIRY_PRODUCT
@@ -17,6 +19,6 @@ namespace OracleDataContext.Models
         public string CREATE_FULLNAME { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
 
-        public virtual FF_RTFCL_INQUIRY FF_RTFCL_INQUIRY_ { get; set; }
+        public virtual FF_RTFCL_INQUIRY FF_RTFCL_INQUIRY { get; set; }
     }
 }

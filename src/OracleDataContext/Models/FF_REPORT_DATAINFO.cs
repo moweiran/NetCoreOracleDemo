@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_REPORT_DATAINFO
@@ -22,5 +24,6 @@ namespace OracleDataContext.Models
         public DateTime CREATE_DATE_TIME { get; set; }
         public bool? ISCREDITNOTE { get; set; }
         public decimal? LOA_TYPE { get; set; }
+        public bool? IS_TAXPERCENT { get; set; }
     }
 }

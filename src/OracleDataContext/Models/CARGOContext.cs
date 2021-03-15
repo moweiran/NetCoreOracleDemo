@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class CARGOContext : DbContext
@@ -46,6 +48,7 @@ namespace OracleDataContext.Models
         public virtual DbSet<BASE_FILES> BASE_FILES { get; set; }
         public virtual DbSet<BASE_HELPINFO> BASE_HELPINFO { get; set; }
         public virtual DbSet<BASE_HELP_CLASS> BASE_HELP_CLASS { get; set; }
+        public virtual DbSet<BASE_HOMEPAGE_CONFIGURE> BASE_HOMEPAGE_CONFIGURE { get; set; }
         public virtual DbSet<BASE_HOMEPAGE_PICTURE> BASE_HOMEPAGE_PICTURE { get; set; }
         public virtual DbSet<BASE_JOB_LOGS> BASE_JOB_LOGS { get; set; }
         public virtual DbSet<BASE_LINERTRACK> BASE_LINERTRACK { get; set; }
@@ -58,6 +61,7 @@ namespace OracleDataContext.Models
         public virtual DbSet<BASE_MONTH_BILL> BASE_MONTH_BILL { get; set; }
         public virtual DbSet<BASE_NEWS> BASE_NEWS { get; set; }
         public virtual DbSet<BASE_NEWS_REPLY> BASE_NEWS_REPLY { get; set; }
+        public virtual DbSet<BASE_NOTICE> BASE_NOTICE { get; set; }
         public virtual DbSet<BASE_ORGANIZATION> BASE_ORGANIZATION { get; set; }
         public virtual DbSet<BASE_OTHER_ADVERTISEMENT> BASE_OTHER_ADVERTISEMENT { get; set; }
         public virtual DbSet<BASE_PARTNER_REWARD> BASE_PARTNER_REWARD { get; set; }
@@ -180,6 +184,7 @@ namespace OracleDataContext.Models
         public virtual DbSet<FF_BLACKLIST> FF_BLACKLIST { get; set; }
         public virtual DbSet<FF_BUY_SERVICE> FF_BUY_SERVICE { get; set; }
         public virtual DbSet<FF_CARRIERDATA_LACK> FF_CARRIERDATA_LACK { get; set; }
+        public virtual DbSet<FF_CARRIER_CONTRACT> FF_CARRIER_CONTRACT { get; set; }
         public virtual DbSet<FF_CARRIER_CONTRAST> FF_CARRIER_CONTRAST { get; set; }
         public virtual DbSet<FF_CHOICE_SUPPLIER> FF_CHOICE_SUPPLIER { get; set; }
         public virtual DbSet<FF_CRM> FF_CRM { get; set; }
@@ -263,6 +268,7 @@ namespace OracleDataContext.Models
         public virtual DbSet<FF_FCL_SPACE> FF_FCL_SPACE { get; set; }
         public virtual DbSet<FF_FCL_SPACE_SO> FF_FCL_SPACE_SO { get; set; }
         public virtual DbSet<FF_FDD_CONTRACT_SIGN> FF_FDD_CONTRACT_SIGN { get; set; }
+        public virtual DbSet<FF_FEETYPE> FF_FEETYPE { get; set; }
         public virtual DbSet<FF_FINANCE_CHECK> FF_FINANCE_CHECK { get; set; }
         public virtual DbSet<FF_FINANCE_CHECK_BILL> FF_FINANCE_CHECK_BILL { get; set; }
         public virtual DbSet<FF_FINANCE_CHECK_EXPENSES> FF_FINANCE_CHECK_EXPENSES { get; set; }
@@ -474,14 +480,14 @@ namespace OracleDataContext.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseOracle("User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:1521/ORCL;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseOracle("User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:1521/ORCL;", o => o.UseOracleSQLCompatibility("11"));
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:DefaultSchema", "CARGO");
+            modelBuilder.HasDefaultSchema("CARGO");
 
             modelBuilder.Entity<BASE_ACTIVITY_PERSON>(entity =>
             {
@@ -634,6 +640,8 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.COMPANY_ID).HasColumnType("NUMBER");
+
                 entity.Property(e => e.COUNT).HasColumnType("NUMBER");
 
                 entity.Property(e => e.CREATE_DATETIME)
@@ -649,6 +657,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.CREATE_USERNAME)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
 
                 entity.Property(e => e.LOGO_ID).HasColumnType("NUMBER");
 
@@ -703,6 +713,8 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.MODIFY_DATETIME)
                     .HasColumnType("DATE")
                     .HasDefaultValueSql("SYSDATE ");
@@ -742,6 +754,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LEGALREP_ID).HasMaxLength(50);
@@ -787,6 +800,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_COMMEND)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LOGO_ID).HasColumnType("NUMBER");
@@ -857,6 +871,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CREATE_USERNAME).HasMaxLength(50);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -914,6 +930,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CREATE_USERID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.MODIFY_DATETIME)
                     .HasColumnType("DATE")
                     .HasDefaultValueSql("SYSDATE");
@@ -923,6 +941,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.MODIFY_USERID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.SHIP_ROUTE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.VALID).HasPrecision(1);
             });
 
             modelBuilder.Entity<BASE_COMMISSION_DISCOUNT>(entity =>
@@ -949,6 +969,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -1062,27 +1083,39 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_AIR_BANKER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
+
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
 
                 entity.Property(e => e.IS_FBA_BANKER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_RAILWAYFCL_BANKER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_RAILWAYLCL_BANKER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
+
+                entity.Property(e => e.IS_SCHEDULE_AUTHORITY).HasPrecision(1);
 
                 entity.Property(e => e.IS_SEAFCL_BANKER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_SEALCL_BANKER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
+
+                entity.Property(e => e.IS_SUPER_PARTNER).HasPrecision(1);
 
                 entity.Property(e => e.LARGEICON).HasMaxLength(254);
 
@@ -1093,6 +1126,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.LOGO).HasMaxLength(254);
 
                 entity.Property(e => e.LOGO_FILE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.MARINEONLINE_OPEN_UID).HasMaxLength(50);
 
                 entity.Property(e => e.MODIFY_DATETIME).HasColumnType("DATE");
 
@@ -1121,6 +1156,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.PROVINCE_NAME_CN).HasMaxLength(200);
 
                 entity.Property(e => e.PROVINCE_NAME_EN).HasMaxLength(200);
+
+                entity.Property(e => e.RECOMMEND_ALLIANCE_FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.REGISTERED_FILE).HasMaxLength(100);
 
@@ -1254,36 +1291,44 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.IS_DIRECTCUSTOMER_MODE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_FINANCE_MODE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_MARKETING_MODE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_OPERATION_MODE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_ROLE_MODE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_TRAILER_MODE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_WEBSITE_MODE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -1341,6 +1386,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -1420,6 +1466,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EMAIL)
@@ -1436,6 +1483,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_BANKER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LEGALREP_ID).HasMaxLength(50);
@@ -1513,6 +1561,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CREATE_USERNAME).HasMaxLength(50);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.REF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.REF_NO).HasMaxLength(200);
@@ -1541,6 +1591,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.CUSTOMER_ID)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
 
                 entity.Property(e => e.MODIFY_DATETIME)
                     .HasColumnType("DATE")
@@ -1627,12 +1679,14 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FFID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.ISDIRECTORS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -1705,6 +1759,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DATE_OF_BIRTH).HasMaxLength(200);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.EMAIL).HasMaxLength(200);
 
                 entity.Property(e => e.EXTEND_TYPE).HasColumnType("NUMBER");
@@ -1770,6 +1826,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -1809,6 +1866,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CREATE_USERNAME).HasMaxLength(50);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.MODIFY_DATETIME)
                     .HasColumnType("DATE")
                     .HasDefaultValueSql("SYSDATE ");
@@ -1846,6 +1905,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FDD_STATUS).HasColumnType("NUMBER(38)");
@@ -1926,6 +1986,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VALID)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
             });
 
@@ -1945,6 +2006,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -2039,6 +2101,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.USER_ID)
                     .HasColumnType("NUMBER")
                     .HasDefaultValueSql("0   ");
+
+                entity.Property(e => e.WEBSITE_SHOW).HasPrecision(1);
             });
 
             modelBuilder.Entity<BASE_FEE_STANDARD>(entity =>
@@ -2065,6 +2129,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DIRECT_CUSTOMER_FEE).HasColumnType("NUMBER(14,2)");
@@ -2122,6 +2187,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ETAG).HasMaxLength(500);
@@ -2172,6 +2238,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.HELPINFO_CONTENT).HasColumnType("CLOB");
@@ -2202,7 +2269,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.READ_NUMBER).HasColumnType("NUMBER(38)");
 
-                entity.HasOne(d => d.HELP_CLASS_)
+                entity.HasOne(d => d.HELP_CLASS)
                     .WithMany(p => p.BASE_HELPINFO)
                     .HasForeignKey(d => d.HELP_CLASS_ID)
                     .OnDelete(DeleteBehavior.Cascade)
@@ -2242,9 +2309,101 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.PARENT_ID).HasColumnType("NUMBER");
+            });
+
+            modelBuilder.Entity<BASE_HOMEPAGE_CONFIGURE>(entity =>
+            {
+                entity.HasKey(e => e.BASE_HOMEPAGE_CONFIGURE_ID);
+
+                entity.Property(e => e.BASE_HOMEPAGE_CONFIGURE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.ALLIANCE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.BOTTON_LOGOID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.COMPANY_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.CONTACTS).HasMaxLength(1000);
+
+                entity.Property(e => e.COPYRIGHT_INFO).HasMaxLength(1000);
+
+                entity.Property(e => e.CREATE_DATETIME)
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("SYSDATE ");
+
+                entity.Property(e => e.CREATE_USERID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.DESCRIBE_EN).HasColumnType("CLOB");
+
+                entity.Property(e => e.DESCRIBE_LOCAL).HasColumnType("CLOB");
+
+                entity.Property(e => e.MENU_RATESEARCH_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.MENU_RATESEARCH_SHOW).HasPrecision(1);
+
+                entity.Property(e => e.MENU_RESOURCE_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.MENU_RESOURCE_SHOW).HasPrecision(1);
+
+                entity.Property(e => e.MENU_TOOLS_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.MENU_TOOLS_SHOW).HasPrecision(1);
+
+                entity.Property(e => e.MODIFY_DATETIME)
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("SYSDATE ");
+
+                entity.Property(e => e.MODIFY_USERID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.RATESEARCH_AIR_CITYS).HasMaxLength(1000);
+
+                entity.Property(e => e.RATESEARCH_AIR_ENABLED).HasPrecision(1);
+
+                entity.Property(e => e.RATESEARCH_AIR_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.RATESEARCH_ECL_CITYS).HasMaxLength(1000);
+
+                entity.Property(e => e.RATESEARCH_ECL_ENABLED).HasPrecision(1);
+
+                entity.Property(e => e.RATESEARCH_ECL_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.RATESEARCH_FBA_CITYS).HasMaxLength(1000);
+
+                entity.Property(e => e.RATESEARCH_FBA_ENABLED).HasPrecision(1);
+
+                entity.Property(e => e.RATESEARCH_FBA_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.RATESEARCH_FCL_CITYS).HasMaxLength(1000);
+
+                entity.Property(e => e.RATESEARCH_FCL_ENABLED).HasPrecision(1);
+
+                entity.Property(e => e.RATESEARCH_FCL_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.RATESEARCH_LCL_CITYS).HasMaxLength(1000);
+
+                entity.Property(e => e.RATESEARCH_LCL_ENABLED).HasPrecision(1);
+
+                entity.Property(e => e.RATESEARCH_LCL_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.RATESEARCH_TRUCKING_ENABLED).HasPrecision(1);
+
+                entity.Property(e => e.RATESEARCH_TRUCKING_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.RATE_SEARCH_CHARTERING_ENABLED).HasPrecision(1);
+
+                entity.Property(e => e.RATE_SEARCH_CHARTERING_INDEX).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.RECORD_INFO).HasMaxLength(1000);
+
+                entity.Property(e => e.RECORD_LINK).HasMaxLength(200);
+
+                entity.Property(e => e.RECORD_SHOW).HasPrecision(1);
+
+                entity.Property(e => e.TOP_LOGOID).HasColumnType("NUMBER");
             });
 
             modelBuilder.Entity<BASE_HOMEPAGE_PICTURE>(entity =>
@@ -2275,7 +2434,10 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
+
+                entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FILE_CN_ID).HasColumnType("NUMBER");
 
@@ -2441,6 +2603,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DISPLAY)
@@ -2455,18 +2618,22 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.HIDEINLG)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.HIDEINMD)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.HIDEINSM)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.HIDEINXS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LIST_NAME).HasMaxLength(500);
@@ -2485,13 +2652,15 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.ORDERABLE).HasDefaultValueSql(@"0
-");
+                entity.Property(e => e.ORDERABLE)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0\n");
 
                 entity.Property(e => e.PAGE_NAME).HasMaxLength(500);
 
                 entity.Property(e => e.SELECTED)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("1 ");
 
                 entity.Property(e => e.SHOWINLANG).HasMaxLength(100);
@@ -2513,6 +2682,8 @@ namespace OracleDataContext.Models
                     .HasMaxLength(100);
 
                 entity.Property(e => e.CREATE_USERID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
 
                 entity.Property(e => e.MAIL_CONTENT)
                     .IsRequired()
@@ -2561,16 +2732,19 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.IS_VIEW_AGENCY)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_VIEW_CUSTOMER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MEMO_CONTENT).IsRequired();
@@ -2596,6 +2770,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CONFIRM)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.CONFIRM_DATE).HasColumnType("DATE");
@@ -2612,6 +2787,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EXPIRE_DATE).HasColumnType("DATE");
@@ -2685,6 +2861,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.EXPIRATION_DATE).HasColumnType("DATE");
 
+                entity.Property(e => e.IS_DELETE).HasPrecision(1);
+
                 entity.Property(e => e.MOBILE_NO)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -2728,6 +2906,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DIRECT_CUSTOMER_PRICE).HasColumnType("NUMBER(14,2)");
@@ -2801,18 +2980,23 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.END_DATE).HasColumnType("DATE");
+
+                entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FILE_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.IS_HOT)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_TEMPLATE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.KEY_WORD).HasMaxLength(200);
@@ -2894,6 +3078,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LIKE_NUMBER)
@@ -2911,6 +3096,47 @@ namespace OracleDataContext.Models
                     .HasColumnType("CLOB");
 
                 entity.Property(e => e.REPLY_NUMBER).HasColumnType("NUMBER(38)");
+            });
+
+            modelBuilder.Entity<BASE_NOTICE>(entity =>
+            {
+                entity.HasKey(e => e.NOTICE_ID)
+                    .HasName("PK_BASE_NOTICE_ID");
+
+                entity.Property(e => e.NOTICE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.CREATE_DATETIME)
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("SYSDATE               ");
+
+                entity.Property(e => e.CREATE_USERNAME)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.DELETE_MARK)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0                     ");
+
+                entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
+
+                entity.Property(e => e.EXPIRATION_DATE).HasColumnType("DATE");
+
+                entity.Property(e => e.MODIFY_DATETIME)
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("SYSDATE               ");
+
+                entity.Property(e => e.MODIFY_USERNAME)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.NOTICE_CONTENT_CN).HasColumnType("CLOB");
+
+                entity.Property(e => e.NOTICE_CONTENT_EN).HasColumnType("CLOB");
+
+                entity.Property(e => e.NOTICE_SYSTEM).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.NOTICE_TYPE).HasColumnType("NUMBER(38)");
             });
 
             modelBuilder.Entity<BASE_ORGANIZATION>(entity =>
@@ -3024,11 +3250,14 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
 
                 entity.Property(e => e.EXPIRATION_DATE).HasColumnType("DATE");
+
+                entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FILE_CN_ID).HasColumnType("NUMBER");
 
@@ -3097,6 +3326,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DIRECT_CUSTOMER_TEU).HasColumnType("NUMBER(38)");
@@ -3154,6 +3384,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -3241,6 +3472,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -3290,6 +3522,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEPARTMENT)
@@ -3359,6 +3592,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -3383,6 +3617,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.USE_DEFAULT)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
             });
 
@@ -3550,46 +3785,63 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EXPIRATION_DATE).HasColumnType("DATE");
 
                 entity.Property(e => e.FILE_ID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.IS_APP_RECOMMENDED_PRIZE).HasPrecision(1);
+
                 entity.Property(e => e.IS_BOX)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_EXTERNAL)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_PEER_SPREAD)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_PUBLISH)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
-                entity.Property(e => e.IS_PUSH_MARKETING).HasDefaultValueSql("0");
+                entity.Property(e => e.IS_PUSH_MARKETING)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.IS_PUSH_MYLIST).HasDefaultValueSql("0");
+                entity.Property(e => e.IS_PUSH_MYLIST)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.IS_SEND_MESSAGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_SHOW_MOBILE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_SYNC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
+
+                entity.Property(e => e.IS_TO_APP).HasPrecision(1);
 
                 entity.Property(e => e.IS_WITHIN)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -3629,6 +3881,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.TITLE_CN).HasMaxLength(100);
 
                 entity.Property(e => e.TITLE_EN).HasMaxLength(100);
+
+                entity.Property(e => e.VALID).HasPrecision(1);
             });
 
             modelBuilder.Entity<BASE_SPREAD_BOX>(entity =>
@@ -3679,13 +3933,16 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EN_FILE_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FILE_ID).HasColumnType("NUMBER");
 
-                entity.Property(e => e.IS_GRADIENT).HasDefaultValueSql("0");
+                entity.Property(e => e.IS_GRADIENT)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.MODIFY_DATETIME)
                     .HasColumnType("DATE")
@@ -3752,6 +4009,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.RAADONLY)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.SYSCONFIGURE_CATEGORY)
@@ -3814,10 +4072,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CONFIRM_EMAIL)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.CONFIRM_MOBILE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.CREATE_DATETIME)
@@ -3848,10 +4108,14 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.GENDER).HasColumnType("CHAR(1)");
+                entity.Property(e => e.GENDER)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.IS_ADMIN)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.KEYCLOAKSUBJECT).HasMaxLength(50);
@@ -3969,6 +4233,10 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
+                entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
                 entity.Property(e => e.IS_MAIN_WAREHOUSE).HasColumnType("NUMBER");
 
                 entity.Property(e => e.MIN_CHARGE).HasColumnType("NUMBER");
@@ -4022,6 +4290,10 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CURRENCY).HasMaxLength(50);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
+                entity.Property(e => e.MAIN_WAREHOUSE_ID).HasColumnType("NUMBER");
+
                 entity.Property(e => e.MODIFY_DATETIME)
                     .HasColumnType("DATE")
                     .HasDefaultValueSql("SYSDATE ");
@@ -4045,14 +4317,11 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.BOOKING_ORDER_ID);
 
-                entity.HasIndex(e => e.CUSTOMER_COMPANY_ID)
-                    .HasName("AK_BOOKING_ORDER_CCID");
+                entity.HasIndex(e => e.CUSTOMER_COMPANY_ID, "AK_BOOKING_ORDER_CCID");
 
-                entity.HasIndex(e => e.FF_ID)
-                    .HasName("AK_BOOKING_ORDER_FFID");
+                entity.HasIndex(e => e.FF_ID, "AK_BOOKING_ORDER_FFID");
 
-                entity.HasIndex(e => e.RATE_ID)
-                    .HasName("AK_BOOKING_ORDER_RATEID");
+                entity.HasIndex(e => e.RATE_ID, "AK_BOOKING_ORDER_RATEID");
 
                 entity.Property(e => e.BOOKING_ORDER_ID).HasColumnType("NUMBER");
 
@@ -4147,6 +4416,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -4177,6 +4447,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_ORDERLIST_SHOWTOP)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("1 ");
 
                 entity.Property(e => e.LAND_DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -4385,6 +4656,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID)
@@ -4452,6 +4724,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FIRST_SCHEDULE_ID).HasColumnType("NUMBER");
@@ -4547,6 +4820,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_AGENT).HasMaxLength(500);
@@ -4689,6 +4963,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -4756,6 +5031,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -4837,8 +5113,11 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.CUSTOMER_VIEW).HasPrecision(1);
+
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -4865,6 +5144,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.PLATFORM_VIEW)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
             });
 
@@ -4897,6 +5177,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_FREEDEMURRAGE_DEFAULT)
@@ -4985,7 +5266,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.RECEIPT_ID).HasColumnType("NUMBER");
 
-                entity.HasOne(d => d.BOOKING_ORDER_RATE_)
+                entity.HasOne(d => d.BOOKING_ORDER_RATE)
                     .WithMany(p => p.BOOKING_ORDER_FREEDETENTION)
                     .HasForeignKey(d => d.BOOKING_ORDER_RATE_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -5014,6 +5295,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.INTRUACK_FF_ID).HasColumnType("NUMBER");
@@ -5036,14 +5318,20 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IN_CUSTOMS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
-                entity.Property(e => e.IN_INSPECTION).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_INSPECTION)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.IN_TAX).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_TAX)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.IN_TRUCK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_COMPANYID).HasColumnType("NUMBER");
@@ -5080,41 +5368,56 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.OUT_AMS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.OUT_CUSTOMS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.OUT_FUMIGATION)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.OUT_INSPECTION)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.OUT_INSURANCE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
-                entity.Property(e => e.OUT_ISF).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_ISF)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_PERMIT).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_PERMIT)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_PURCHASE).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_PURCHASE)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.OUT_TRUCK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
-                entity.Property(e => e.OUT_VAT).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_VAT)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.OUT_VGM)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
-                entity.HasOne(d => d.BOOKING_ORDER_)
+                entity.HasOne(d => d.BOOKING_ORDER)
                     .WithMany(p => p.BOOKING_ORDER_OTHER)
                     .HasForeignKey(d => d.BOOKING_ORDER_ID)
                     .HasConstraintName("FK_BOOKING__FK_BOOKIN_BOOKING_");
@@ -5140,6 +5443,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -5220,6 +5524,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EIR_QTY)
@@ -5272,7 +5577,7 @@ namespace OracleDataContext.Models
                     .HasColumnType("NUMBER(38)")
                     .HasDefaultValueSql("0 ");
 
-                entity.HasOne(d => d.BOOKING_ORDER_)
+                entity.HasOne(d => d.BOOKING_ORDER)
                     .WithMany(p => p.BOOKING_ORDER_RATE)
                     .HasForeignKey(d => d.BOOKING_ORDER_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -5284,6 +5589,8 @@ namespace OracleDataContext.Models
                 entity.HasKey(e => e.BOOKING_ORDER_SI_ID);
 
                 entity.Property(e => e.BOOKING_ORDER_SI_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.APISHIPPINGINFOID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.APPROVED_DATE).HasColumnType("DATE");
 
@@ -5331,6 +5638,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -5423,6 +5731,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCL_SPACE_SO_ID).HasColumnType("NUMBER");
@@ -5496,6 +5805,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -5526,7 +5836,7 @@ namespace OracleDataContext.Models
                     .HasColumnType("NUMBER(38)")
                     .HasDefaultValueSql("0 ");
 
-                entity.HasOne(d => d.BOOKING_ORDER_)
+                entity.HasOne(d => d.BOOKING_ORDER)
                     .WithMany(p => p.BOOKING_ORDER_SURCHARGE)
                     .HasForeignKey(d => d.BOOKING_ORDER_ID)
                     .HasConstraintName("FK_BOOKINGORDERSURCHARGE");
@@ -5586,6 +5896,12 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.CONTAINERTYPE)
                     .IsRequired()
                     .HasMaxLength(3);
+
+                entity.Property(e => e.HAZARDOUS).HasPrecision(1);
+
+                entity.Property(e => e.SEQNO).HasColumnType("NUMBER");
+
+                entity.Property(e => e.SHIPPEROWNED).HasPrecision(1);
             });
 
             modelBuilder.Entity<CALISTA_FREIGHT_BOOKING>(entity =>
@@ -5965,6 +6281,14 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.GITMTIME).HasColumnType("DATE");
 
+                entity.Property(e => e.ISCTNR).HasPrecision(1);
+
+                entity.Property(e => e.ISPASS).HasPrecision(1);
+
+                entity.Property(e => e.ISPRELOAD).HasPrecision(1);
+
+                entity.Property(e => e.ISTMPS).HasPrecision(1);
+
                 entity.Property(e => e.LOBDPLACE).HasMaxLength(200);
 
                 entity.Property(e => e.LOBDTIME).HasColumnType("DATE");
@@ -6208,7 +6532,9 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CUSTOMER_SHORTNAME).HasMaxLength(50);
 
-                entity.Property(e => e.DELETE_MARK).HasDefaultValueSql("(0)");
+                entity.Property(e => e.DELETE_MARK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("(0)");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
 
@@ -6289,6 +6615,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("(0) ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -6324,7 +6651,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.POL_ID).HasColumnType("NUMBER");
 
-                entity.HasOne(d => d.CONTRACT_)
+                entity.HasOne(d => d.CONTRACT)
                     .WithMany(p => p.CONTRACT_DETAIL)
                     .HasForeignKey(d => d.CONTRACT_ID)
                     .HasConstraintName("FK_CONTRACT_DETAIL");
@@ -6358,6 +6685,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEE_CODE)
@@ -6385,6 +6713,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.INCLUDE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_COMPANYID).HasColumnType("NUMBER");
@@ -6409,7 +6738,7 @@ namespace OracleDataContext.Models
                     .HasColumnType("NUMBER(38)")
                     .HasDefaultValueSql("0 ");
 
-                entity.HasOne(d => d.CONTRACT_DETAIL_)
+                entity.HasOne(d => d.CONTRACT_DETAIL)
                     .WithMany(p => p.CONTRACT_SURCHARGE)
                     .HasForeignKey(d => d.CONTRACT_DETAIL_ID)
                     .OnDelete(DeleteBehavior.Cascade)
@@ -6847,6 +7176,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -6916,6 +7246,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -6930,6 +7261,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VALID)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
             });
 
@@ -6970,6 +7302,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EMAIL).HasMaxLength(50);
@@ -6980,6 +7313,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_DEFAULT)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LAST_USE_TIME).HasColumnType("DATE");
@@ -7018,6 +7352,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VALID)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
             });
 
@@ -7079,6 +7414,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ADDRESS).HasMaxLength(200);
@@ -7099,9 +7435,13 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.HEIGHT).HasColumnType("NUMBER(14,2)");
 
-                entity.Property(e => e.IN_CUSTOMS).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_CUSTOMS)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.IN_TRUCK).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_TRUCK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.LENGTHS).HasColumnType("NUMBER(14,2)");
 
@@ -7121,17 +7461,29 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.OUT_AMS).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_AMS)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_CUSTOMS).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_CUSTOMS)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_INSPECTION).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_INSPECTION)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_INSURANCE).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_INSURANCE)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_PACK).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_PACK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_TRUCK).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_TRUCK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.QTY).HasColumnType("NUMBER(14,2)");
 
@@ -7156,6 +7508,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VALID)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("1 ");
 
                 entity.Property(e => e.VOLUME).HasColumnType("NUMBER(14,2)");
@@ -7199,6 +7552,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ADDRESS).HasMaxLength(200);
@@ -7219,9 +7573,13 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.HEIGHT).HasColumnType("NUMBER(14,2)");
 
-                entity.Property(e => e.IN_CUSTOMS).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_CUSTOMS)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.IN_TRUCK).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_TRUCK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.LENGTHS).HasColumnType("NUMBER(14,2)");
 
@@ -7241,15 +7599,25 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.OUT_CUSTOMS).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_CUSTOMS)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_INSPECTION).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_INSPECTION)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_INSURANCE).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_INSURANCE)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_PACK).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_PACK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_TRUCK).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_TRUCK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.QTY).HasColumnType("NUMBER(14,2)");
 
@@ -7276,6 +7644,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VALID)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("1 ");
 
                 entity.Property(e => e.VOLUME).HasColumnType("NUMBER(14,2)");
@@ -7319,6 +7688,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ADDRESS).HasMaxLength(200);
@@ -7339,9 +7709,13 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.HEIGHT).HasColumnType("NUMBER(14,2)");
 
-                entity.Property(e => e.IN_CUSTOMS).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_CUSTOMS)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.IN_TRUCK).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_TRUCK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.LENGTHS).HasColumnType("NUMBER(14,2)");
 
@@ -7361,21 +7735,37 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.OUT_AMS).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_AMS)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_CUSTOMS).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_CUSTOMS)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_FUMIGATION).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_FUMIGATION)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_INSPECTION).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_INSPECTION)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_INSURANCE).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_INSURANCE)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_PACK).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_PACK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_TRUCK).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_TRUCK)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_VGM).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_VGM)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.QTY).HasColumnType("NUMBER(14,2)");
 
@@ -7400,6 +7790,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VALID)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("1 ");
 
                 entity.Property(e => e.VOLUME).HasColumnType("NUMBER(14,2)");
@@ -7415,7 +7806,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.ECL_PACK_CONTAINER_ID).HasColumnType("NUMBER");
 
-                entity.Property(e => e.COUNT).HasColumnType("NUMBER(9)");
+                entity.Property(e => e.COUNT).HasPrecision(9);
 
                 entity.Property(e => e.CREATE_DATETIME).HasColumnType("DATE");
 
@@ -7431,7 +7822,7 @@ namespace OracleDataContext.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.STATUS).HasColumnType("NUMBER(9)");
+                entity.Property(e => e.STATUS).HasPrecision(9);
             });
 
             modelBuilder.Entity<ECL_PACK_CONTAINER_2_ORDER>(entity =>
@@ -7450,7 +7841,7 @@ namespace OracleDataContext.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.ECL_PACK_CONTAINER_)
+                entity.HasOne(d => d.ECL_PACK_CONTAINER)
                     .WithMany(p => p.ECL_PACK_CONTAINER_2_ORDER)
                     .HasForeignKey(d => d.ECL_PACK_CONTAINER_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -7485,6 +7876,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -7544,6 +7936,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -7615,6 +8008,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -7678,6 +8072,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -7738,6 +8133,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_COUNTRY_ID).HasColumnType("NUMBER");
@@ -7801,6 +8197,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -7874,6 +8271,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -7940,6 +8338,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -8020,6 +8419,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -8046,22 +8446,28 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.HQ40_SALE).HasColumnType("NUMBER(14,2)");
 
-                entity.Property(e => e.IS_ACTUAL_COST_PAY).HasDefaultValueSql("0");
+                entity.Property(e => e.IS_ACTUAL_COST_PAY)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.IS_APPLY_DIRECTCUSTOMER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_APPLY_OVERSEAAGENCY)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_APPLY_PEER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_MUST_CHARGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -8126,6 +8532,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -8157,6 +8564,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -8188,6 +8596,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -8219,6 +8628,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIRBRANCH_PRODUCT_LIST_ID).HasColumnType("NUMBER");
@@ -8280,6 +8690,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -8327,6 +8738,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -8394,6 +8806,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -8463,6 +8876,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIRMAIN_PRODUCT_ID).HasColumnType("NUMBER");
@@ -8518,6 +8932,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIRMAIN_PRODUCT_LIST_ID).HasColumnType("NUMBER");
@@ -8591,6 +9006,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -8634,6 +9050,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIRMAIN_PRODUCT_LIST_ID).HasColumnType("NUMBER");
@@ -8699,6 +9116,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIRBRANCH_PRODUCT_ID).HasColumnType("NUMBER");
@@ -8730,6 +9148,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -8784,6 +9203,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIRMAIN_RATE_ID).HasColumnType("NUMBER");
@@ -8850,6 +9270,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -8945,6 +9366,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIR_PRODUCT_ID).HasColumnType("NUMBER");
@@ -8953,10 +9375,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_AUTOMATIC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_AUTOPRICE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -9020,6 +9444,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -9138,6 +9563,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -9195,6 +9621,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIR_INQUIRY_ID).HasColumnType("NUMBER");
@@ -9203,6 +9630,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_RATERULE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -9260,7 +9688,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CONSIGNEE_DESC).HasMaxLength(500);
 
-                entity.Property(e => e.CONTAINER_COUNT).HasColumnType("NUMBER(9)");
+                entity.Property(e => e.CONTAINER_COUNT).HasPrecision(9);
 
                 entity.Property(e => e.CREATE_DATETIME)
                     .HasColumnType("DATE")
@@ -9290,6 +9718,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -9434,6 +9863,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -9566,6 +9996,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ETA).HasColumnType("DATE");
@@ -9590,7 +10021,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.TRACK_STATUS).HasColumnType("NUMBER(38)");
 
-                entity.HasOne(d => d.AIR_ORDER_)
+                entity.HasOne(d => d.AIR_ORDER)
                     .WithMany(p => p.FF_AIR_ORDER_BOOKING)
                     .HasForeignKey(d => d.AIR_ORDER_ID)
                     .OnDelete(DeleteBehavior.Cascade)
@@ -9637,6 +10068,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -9671,7 +10103,7 @@ namespace OracleDataContext.Models
                     .HasColumnType("NUMBER(38)")
                     .HasDefaultValueSql("0 ");
 
-                entity.HasOne(d => d.AIR_ORDER_)
+                entity.HasOne(d => d.AIR_ORDER)
                     .WithMany(p => p.FF_AIR_ORDER_CHARGE)
                     .HasForeignKey(d => d.AIR_ORDER_ID)
                     .HasConstraintName("FK_FF_AIR_ORDER_CHARGE");
@@ -9709,6 +10141,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -9735,7 +10168,7 @@ namespace OracleDataContext.Models
                     .HasColumnType("NUMBER(38)")
                     .HasDefaultValueSql("0 ");
 
-                entity.HasOne(d => d.AIR_ORDER_)
+                entity.HasOne(d => d.AIR_ORDER)
                     .WithMany(p => p.FF_AIR_ORDER_DESTFEE)
                     .HasForeignKey(d => d.AIR_ORDER_ID)
                     .HasConstraintName("FK_FF_AIR_ORDER_DESTFEE");
@@ -9793,6 +10226,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -9888,6 +10322,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -9955,6 +10390,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIR_PRODUCT_ID).HasColumnType("NUMBER");
@@ -10012,6 +10448,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -10121,6 +10558,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIR_RATE_DETAIL_ID).HasColumnType("NUMBER");
@@ -10176,6 +10614,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_AIR_RATE_ID).HasColumnType("NUMBER");
@@ -10231,6 +10670,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -10268,6 +10708,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -10280,6 +10721,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_MUST_CHARGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -10338,6 +10780,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -10348,6 +10791,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_MUST_CHARGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -10396,6 +10840,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -10461,6 +10906,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -10588,6 +11034,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -10613,8 +11060,7 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.FF_BILL_ID);
 
-                entity.HasIndex(e => e.FF_BILL_LIST_ID)
-                    .HasName("FK_BILL_LISTID");
+                entity.HasIndex(e => e.FF_BILL_LIST_ID, "FK_BILL_LISTID");
 
                 entity.Property(e => e.FF_BILL_ID).HasColumnType("NUMBER");
 
@@ -10650,6 +11096,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -10704,6 +11151,10 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.STATUS).HasColumnType("NUMBER(38)");
 
+                entity.Property(e => e.TAX_AMOUNT).HasColumnType("NUMBER(19,3)");
+
+                entity.Property(e => e.TAX_PERCENT).HasColumnType("NUMBER(18,2)");
+
                 entity.Property(e => e.VERIFY_DATE).HasColumnType("DATE");
 
                 entity.Property(e => e.VERIFY_FULLNAME).HasMaxLength(50);
@@ -10737,6 +11188,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_BILL_ID).HasColumnType("NUMBER");
@@ -10774,6 +11226,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -10811,14 +11264,11 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.FF_BILL_LIST_ID);
 
-                entity.HasIndex(e => new { e.PAY_COMAPNY_TYPE, e.PAY_COMPANY_ID })
-                    .HasName("FK_BILLLIST_PTYPEID");
+                entity.HasIndex(e => new { e.PAY_COMAPNY_TYPE, e.PAY_COMPANY_ID }, "FK_BILLLIST_PTYPEID");
 
-                entity.HasIndex(e => new { e.RECEIVER_COMPANY_TYPE, e.RECEIVER_COMPANY_ID })
-                    .HasName("FK_BILLLIST_RTYPEID");
+                entity.HasIndex(e => new { e.RECEIVER_COMPANY_TYPE, e.RECEIVER_COMPANY_ID }, "FK_BILLLIST_RTYPEID");
 
-                entity.HasIndex(e => new { e.BUSINESS_TYPE, e.MAIN_BOOKING_ORDER_ID, e.BOOKING_ORDER_ID })
-                    .HasName("FK_BILLLIST_TYPEID");
+                entity.HasIndex(e => new { e.BUSINESS_TYPE, e.MAIN_BOOKING_ORDER_ID, e.BOOKING_ORDER_ID }, "FK_BILLLIST_TYPEID");
 
                 entity.Property(e => e.FF_BILL_LIST_ID).HasColumnType("NUMBER");
 
@@ -10852,6 +11302,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -10860,6 +11311,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_CONFIRM)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MAIN_BOOKING_ORDER_ID).HasColumnType("NUMBER");
@@ -10949,6 +11401,8 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.FF_BILL_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_BILL_LIST_ID).HasColumnType("NUMBER");
@@ -11010,6 +11464,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -11051,6 +11506,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -11106,6 +11562,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -11153,6 +11610,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -11216,6 +11674,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -11239,6 +11698,49 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.ROUTE_CODE).HasMaxLength(50);
 
                 entity.Property(e => e.STATUS).HasColumnType("NUMBER(38)");
+            });
+
+            modelBuilder.Entity<FF_CARRIER_CONTRACT>(entity =>
+            {
+                entity.HasKey(e => e.FF_CARRIER_CONTRACT_ID);
+
+                entity.Property(e => e.FF_CARRIER_CONTRACT_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.CARRIER_IDS)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.CHECK_DATE).HasColumnType("DATE");
+
+                entity.Property(e => e.CHECK_REMARK).HasMaxLength(200);
+
+                entity.Property(e => e.CREATE_DATETIME)
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("SYSDATE ");
+
+                entity.Property(e => e.CREATE_USERID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.CREATE_USERNAME)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
+                entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.MODIFY_DATETIME)
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("SYSDATE ");
+
+                entity.Property(e => e.MODIFY_USERID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.MODIFY_USERNAME)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.REMARK).HasMaxLength(200);
+
+                entity.Property(e => e.STATUS).HasColumnType("NUMBER");
             });
 
             modelBuilder.Entity<FF_CARRIER_CONTRAST>(entity =>
@@ -11288,6 +11790,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -11373,6 +11876,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID)
@@ -11389,6 +11893,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_CONFIRM)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_COMPANYID).HasColumnType("NUMBER");
@@ -11480,10 +11985,13 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
-                entity.Property(e => e.IS_AGENCY).HasDefaultValueSql("0");
+                entity.Property(e => e.IS_AGENCY)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.IS_LCL_DEST)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -11549,6 +12057,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -11622,6 +12131,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -11656,6 +12166,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.CUSTOMER_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.CUSTOMER_TYPE).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
@@ -11696,6 +12208,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -11757,6 +12270,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -11771,10 +12285,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_AUTOMATIC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_AUTOPRICE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -11824,11 +12340,14 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.ISOWNER).HasPrecision(1);
 
                 entity.Property(e => e.MODIFY_COMPANYID).HasColumnType("NUMBER");
 
@@ -11859,10 +12378,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CONFIRM_EMAIL)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.CONFIRM_MOBILE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.CREATE_DATETIME)
@@ -11893,10 +12414,14 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.GENDER).HasColumnType("CHAR(1)");
+                entity.Property(e => e.GENDER)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.IS_ADMIN)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LANGUAGE)
@@ -11968,6 +12493,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -12027,6 +12553,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLSURCHARGE_DGLEVELL_ID)
@@ -12092,6 +12619,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -12128,6 +12656,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -12160,6 +12689,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -12209,6 +12739,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEE).HasMaxLength(100);
@@ -12252,6 +12783,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_AGENCYFEE_ID).HasColumnType("NUMBER");
@@ -12270,7 +12802,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.MODIFY_USERID).HasColumnType("NUMBER");
 
-                entity.HasOne(d => d.FF_ECL_AGENCYFEE_)
+                entity.HasOne(d => d.FF_ECL_AGENCYFEE)
                     .WithMany(p => p.FF_ECL_AGENCYFEE_PRODUCT)
                     .HasForeignKey(d => d.FF_ECL_AGENCYFEE_ID)
                     .OnDelete(DeleteBehavior.Cascade)
@@ -12298,6 +12830,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_PRODUCT_ID).HasColumnType("NUMBER");
@@ -12308,10 +12841,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_AUTOMATIC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_AUTOPRICE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -12395,6 +12930,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_AREA).HasMaxLength(100);
@@ -12516,6 +13052,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_IMPORT_ID).HasColumnType("NUMBER");
@@ -12581,6 +13118,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_COUNTRY_ID).HasColumnType("NUMBER");
@@ -12630,6 +13168,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_INQUIRY_ID).HasColumnType("NUMBER");
@@ -12638,6 +13177,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_RATERULE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -12703,7 +13243,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CONSIGNEE_ZIP).HasMaxLength(200);
 
-                entity.Property(e => e.CONTAINER_COUNT).HasColumnType("NUMBER(9)");
+                entity.Property(e => e.CONTAINER_COUNT).HasPrecision(9);
 
                 entity.Property(e => e.CREATE_DATETIME)
                     .HasColumnType("DATE")
@@ -12725,6 +13265,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_AREA).HasMaxLength(100);
@@ -12753,10 +13294,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_INSURANCE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_REFUND)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LINKER_ADDRESS)
@@ -12877,6 +13420,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ETA).HasColumnType("DATE");
@@ -12962,6 +13506,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -13023,6 +13568,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_ORDER_ID).HasColumnType("NUMBER");
@@ -13082,6 +13628,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_AREA).HasMaxLength(100);
@@ -13100,6 +13647,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_TAX)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -13124,7 +13672,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.TT).HasMaxLength(100);
 
-                entity.HasOne(d => d.FF_ECL_PRODUCT_LIST_)
+                entity.HasOne(d => d.FF_ECL_PRODUCT_LIST)
                     .WithMany(p => p.FF_ECL_PRODUCT)
                     .HasForeignKey(d => d.FF_ECL_PRODUCT_LIST_ID)
                     .HasConstraintName("FK_FF_ECL_P_FK_FF_ECL_FF_ECL_P");
@@ -13148,6 +13696,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FBA_ID).HasColumnType("NUMBER");
@@ -13166,7 +13715,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.MODIFY_USERID).HasColumnType("NUMBER");
 
-                entity.HasOne(d => d.FF_ECL_PRODUCT_)
+                entity.HasOne(d => d.FF_ECL_PRODUCT)
                     .WithMany(p => p.FF_ECL_PRODUCT_FBA)
                     .HasForeignKey(d => d.FF_ECL_PRODUCT_ID)
                     .HasConstraintName("FK_FF_ECL_PRODUCT_FBA");
@@ -13194,6 +13743,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.END_LEVEL).HasColumnType("NUMBER(14,2)");
@@ -13218,7 +13768,7 @@ namespace OracleDataContext.Models
                     .HasColumnType("NUMBER(38)")
                     .HasDefaultValueSql("1       ");
 
-                entity.HasOne(d => d.FF_ECL_PRODUCT_LIST_)
+                entity.HasOne(d => d.FF_ECL_PRODUCT_LIST)
                     .WithMany(p => p.FF_ECL_PRODUCT_LEVEL)
                     .HasForeignKey(d => d.FF_ECL_PRODUCT_LIST_ID)
                     .HasConstraintName("FK_FF_ECL_PRODUCT_LEVEL");
@@ -13260,6 +13810,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ECL_TYPE).HasColumnType("NUMBER(38)");
@@ -13270,18 +13821,22 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_EXPRESS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_FBA)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_PAK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_SPECIALLINE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LEVEL_TYPE)
@@ -13335,6 +13890,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_PRODUCT_ID).HasColumnType("NUMBER");
@@ -13373,6 +13929,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_PRODUCT_LEVEL_ID).HasColumnType("NUMBER");
@@ -13395,7 +13952,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.RULE_ADD).HasColumnType("NUMBER(14,2)");
 
-                entity.HasOne(d => d.FF_ECL_PRODUCT_SUPPLIER_)
+                entity.HasOne(d => d.FF_ECL_PRODUCT_SUPPLIER)
                     .WithMany(p => p.FF_ECL_PRODUCT_SUPPLIER_RULE)
                     .HasForeignKey(d => d.FF_ECL_PRODUCT_SUPPLIER_ID)
                     .OnDelete(DeleteBehavior.Cascade)
@@ -13424,6 +13981,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_PRODUCT_ID).HasColumnType("NUMBER");
@@ -13471,6 +14029,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_COUNTRY_ID).HasColumnType("NUMBER");
@@ -13539,6 +14098,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_PRODUCT_LEVEL_ID).HasColumnType("NUMBER");
@@ -13549,10 +14109,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_AUTOMATIC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_AUTOPRICE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -13604,6 +14166,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_PRODUCT_LEVEL_ID).HasColumnType("NUMBER");
@@ -13638,7 +14201,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.RATE_SALES_CONTINUED).HasColumnType("NUMBER(15,3)");
 
-                entity.HasOne(d => d.FF_ECL_RATE_)
+                entity.HasOne(d => d.FF_ECL_RATE)
                     .WithMany(p => p.FF_ECL_RATE_DETAIL)
                     .HasForeignKey(d => d.FF_ECL_RATE_ID)
                     .OnDelete(DeleteBehavior.Cascade)
@@ -13663,6 +14226,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -13712,6 +14276,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_COUNTRY_ID).HasColumnType("NUMBER");
@@ -13745,6 +14310,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -13786,6 +14352,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_TOKEN_ID).HasColumnType("NUMBER");
@@ -13815,6 +14382,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FBA_QTY)
@@ -13860,6 +14428,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ECL_ZONE_ID).HasColumnType("NUMBER");
@@ -13901,6 +14470,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FBA_ID).HasColumnType("NUMBER");
@@ -13938,6 +14508,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -14001,6 +14572,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLBRANCH_CPL_ID).HasColumnType("NUMBER");
@@ -14050,6 +14622,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -14097,6 +14670,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -14152,6 +14726,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -14195,6 +14770,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLMAIN_CPL_ID).HasColumnType("NUMBER");
@@ -14205,6 +14781,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_NOT_ALONESALE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -14266,6 +14843,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -14305,6 +14883,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLMAIN_CP_RATE_ID).HasColumnType("NUMBER");
@@ -14362,6 +14941,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLMAIN_CP_ID).HasColumnType("NUMBER");
@@ -14415,6 +14995,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -14467,6 +15048,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FCLBRANCH_TYPE).HasColumnType("NUMBER(38)");
@@ -14496,6 +15078,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -14561,6 +15144,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -14607,6 +15191,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ETA).HasColumnType("DATE");
@@ -14670,6 +15255,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLMAIN_PRODUCT_GROUP_ID).HasColumnType("NUMBER");
@@ -14717,6 +15303,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -14770,6 +15357,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -14819,6 +15407,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -14891,6 +15480,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -14944,6 +15534,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -15024,6 +15615,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLMAIN_GROUP_RATE_ID).HasColumnType("NUMBER");
@@ -15077,6 +15669,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLMAIN_RATE_ID).HasColumnType("NUMBER");
@@ -15132,6 +15725,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -15190,6 +15784,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -15267,6 +15862,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -15308,6 +15904,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DG_LEVEL_ID).HasColumnType("NUMBER");
@@ -15375,6 +15972,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -15422,6 +16020,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -15473,6 +16072,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.END_WEIGHT).HasColumnType("NUMBER(38)");
@@ -15516,6 +16116,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -15571,6 +16172,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -15622,6 +16224,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -15693,6 +16296,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -15726,14 +16330,11 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.FF_FCL_BRANCH_RATE_ID);
 
-                entity.HasIndex(e => e.BRANCH_RATE_ID)
-                    .HasName("FK_FCL_BRANCHRATE_BID");
+                entity.HasIndex(e => e.BRANCH_RATE_ID, "FK_FCL_BRANCHRATE_BID");
 
-                entity.HasIndex(e => e.FF_ID)
-                    .HasName("FK_FCL_BRANCHRATE_FFID");
+                entity.HasIndex(e => new { e.CARRIER_ID, e.ROUTE_ID, e.PORT_ID, e.BUSINESS_TYPE }, "FK_FCL_BRANCHRATE_CRP");
 
-                entity.HasIndex(e => new { e.CARRIER_ID, e.ROUTE_ID, e.PORT_ID, e.BUSINESS_TYPE })
-                    .HasName("FK_FCL_BRANCHRATE_CRP");
+                entity.HasIndex(e => e.FF_ID, "FK_FCL_BRANCHRATE_FFID");
 
                 entity.Property(e => e.FF_FCL_BRANCH_RATE_ID).HasColumnType("NUMBER");
 
@@ -15757,6 +16358,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -15806,6 +16408,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -15829,14 +16432,11 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.FF_FCL_LAND_RATE_ID);
 
-                entity.HasIndex(e => e.FF_ID)
-                    .HasName("FK_FCL_LANDRATE_FFID");
+                entity.HasIndex(e => new { e.CARRIER_ID, e.ROUTE_ID, e.PORT_ID, e.ADAPT_TO }, "FK_FCL_LANDRATE_CRP");
 
-                entity.HasIndex(e => new { e.CARRIER_ID, e.ROUTE_ID, e.PORT_ID, e.ADAPT_TO })
-                    .HasName("FK_FCL_LANDRATE_CRP");
+                entity.HasIndex(e => new { e.LAND_FEE_ID, e.LAND_FEE_PRICE_ID, e.LAND_FEE_DETAIL_ID, e.LAND_FEE_ROUTE_ID }, "FK_FCL_LANDRATE_FDID");
 
-                entity.HasIndex(e => new { e.LAND_FEE_ID, e.LAND_FEE_PRICE_ID, e.LAND_FEE_DETAIL_ID, e.LAND_FEE_ROUTE_ID })
-                    .HasName("FK_FCL_LANDRATE_FDID");
+                entity.HasIndex(e => e.FF_ID, "FK_FCL_LANDRATE_FFID");
 
                 entity.Property(e => e.FF_FCL_LAND_RATE_ID).HasColumnType("NUMBER");
 
@@ -15856,6 +16456,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -15917,6 +16518,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -15982,6 +16584,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCL_SPACE_ID).HasColumnType("NUMBER");
@@ -16030,6 +16633,92 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.TRANSACTION_ID)
                     .IsRequired()
                     .HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<FF_FEETYPE>(entity =>
+            {
+                entity.HasKey(e => e.FF_FEETYPE_ID);
+
+                entity.Property(e => e.FF_FEETYPE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.CREATE_DATETIME)
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("SYSDATE               ");
+
+                entity.Property(e => e.CREATE_USERNAME)
+                    .IsRequired()
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.DELETE_MARK)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0                     ");
+
+                entity.Property(e => e.FEE_CODE)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.FEE_NAME_CN)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.FEE_NAME_EN)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_AIR)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("1                     ");
+
+                entity.Property(e => e.IS_CUSTOMS)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("1                     ");
+
+                entity.Property(e => e.IS_ECL)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("1                     ");
+
+                entity.Property(e => e.IS_OCEAN)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("1                     ");
+
+                entity.Property(e => e.IS_RAILWAY)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("1                     ");
+
+                entity.Property(e => e.IS_TRAILER)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("1                     ");
+
+                entity.Property(e => e.IS_WAREHOUSE)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("1                     ");
+
+                entity.Property(e => e.MODIFY_DATETIME)
+                    .HasColumnType("DATE")
+                    .HasDefaultValueSql("SYSDATE               ");
+
+                entity.Property(e => e.MODIFY_USERNAME)
+                    .IsRequired()
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.REMARK).HasMaxLength(500);
+
+                entity.Property(e => e.TAX_PERCENT).HasColumnType("NUMBER(18,2)");
+
+                entity.Property(e => e.VALID)
+                    .IsRequired()
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0                     ");
             });
 
             modelBuilder.Entity<FF_FINANCE_CHECK>(entity =>
@@ -16082,6 +16771,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -16139,6 +16829,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_BILL_LIST_ID).HasColumnType("NUMBER");
@@ -16194,6 +16885,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EXPENSES_TYPE).HasColumnType("NUMBER(38)");
@@ -16208,6 +16900,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_WRITEOFF)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -16259,6 +16952,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -16318,6 +17012,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -16332,11 +17027,54 @@ namespace OracleDataContext.Models
                     .HasColumnType("NUMBER(38)")
                     .HasDefaultValueSql("1");
 
+                entity.Property(e => e.IS_SHOW_ABOUTUS).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_AIR_RATE).HasPrecision(1);
+
                 entity.Property(e => e.IS_SHOW_BACKGROUND_COLOR).HasMaxLength(100);
 
                 entity.Property(e => e.IS_SHOW_CARGOTRACK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
+
+                entity.Property(e => e.IS_SHOW_CLASSICHOMEPAGE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_CONCISEHOMEPAGE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_CONTACTUS).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_COREBUSINESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_ECL_RATE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_FBA_RATE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_FCL_RATE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_LCL_RATE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_NEWS).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_NOTICE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_RTFCL_RATE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_RTLCL_RATE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SHOW_SEARCHRATE).HasPrecision(1);
+
+                entity.Property(e => e.MENU_RATESEARCH_INDEX).HasColumnType("NUMBER");
+
+                entity.Property(e => e.MENU_RATESEARCH_SHOW).HasColumnType("NUMBER");
+
+                entity.Property(e => e.MENU_RESOURCE_INDEX).HasColumnType("NUMBER");
+
+                entity.Property(e => e.MENU_RESOURCE_SHOW).HasColumnType("NUMBER");
+
+                entity.Property(e => e.MENU_TOOLS_INDEX).HasColumnType("NUMBER");
+
+                entity.Property(e => e.MENU_TOOLS_SHOW).HasColumnType("NUMBER");
 
                 entity.Property(e => e.MODIFY_COMPANYID).HasColumnType("NUMBER");
 
@@ -16361,6 +17099,18 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.PAGE_BACKGROUND_FILE_TO)
                     .HasColumnType("NUMBER(38)")
                     .HasDefaultValueSql("0");
+
+                entity.Property(e => e.RATESEARCH_AIR_INDEX).HasColumnType("NUMBER");
+
+                entity.Property(e => e.RATESEARCH_ECL_INDEX).HasColumnType("NUMBER");
+
+                entity.Property(e => e.RATESEARCH_FBA_INDEX).HasColumnType("NUMBER");
+
+                entity.Property(e => e.RATESEARCH_FCL_INDEX).HasColumnType("NUMBER");
+
+                entity.Property(e => e.RATESEARCH_LCL_INDEX).HasColumnType("NUMBER");
+
+                entity.Property(e => e.RATESEARCH_TRUCKING_INDEX).HasColumnType("NUMBER");
 
                 entity.Property(e => e.RATE_FILE_ID).HasColumnType("NUMBER");
 
@@ -16441,6 +17191,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -16504,6 +17255,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -16555,12 +17307,14 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.IS_SHOW)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("1 ");
 
                 entity.Property(e => e.MENU_CNAME)
@@ -16602,8 +17356,7 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.FF_INQUIRY_ID);
 
-                entity.HasIndex(e => new { e.FF_ID, e.PLAN_DATE })
-                    .HasName("AK_FFINQUIRY_FFID_PD");
+                entity.HasIndex(e => new { e.FF_ID, e.PLAN_DATE }, "AK_FFINQUIRY_FFID_PD");
 
                 entity.Property(e => e.FF_INQUIRY_ID).HasColumnType("NUMBER");
 
@@ -16631,6 +17384,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -16698,12 +17452,14 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_INQUIRY_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.IS_RATERULE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LAND_DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -16759,6 +17515,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EXPRESS_DATE).HasColumnType("DATE");
@@ -16812,6 +17569,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_BILL_LIST_ID).HasColumnType("NUMBER");
@@ -16848,6 +17606,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -16878,6 +17637,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -16886,6 +17646,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_CC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LOCATION_CITY_ID).HasColumnType("NUMBER");
@@ -16934,6 +17695,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -16982,6 +17744,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -17044,6 +17807,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -17095,6 +17859,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -17140,6 +17905,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -17148,6 +17914,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_CC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LEVEL_TYPE)
@@ -17207,6 +17974,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.END_CBM).HasColumnType("NUMBER(14,2)");
@@ -17217,10 +17985,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_BRANCH_CBM)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_MAX)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -17233,7 +18003,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.MODIFY_USERID).HasColumnType("NUMBER");
 
-                entity.HasOne(d => d.FF_LCLMAIN_PRODUCT_)
+                entity.HasOne(d => d.FF_LCLMAIN_PRODUCT)
                     .WithMany(p => p.FF_LCLMAIN_PRODUCT_LEVEL)
                     .HasForeignKey(d => d.FF_LCLMAIN_PRODUCT_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -17272,6 +18042,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -17280,6 +18051,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_ALLIN)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -17321,6 +18093,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -17370,6 +18143,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEPARTURE).HasColumnType("NUMBER(38)");
@@ -17410,6 +18184,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -17443,6 +18218,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -17503,6 +18279,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -17553,6 +18330,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -17605,6 +18383,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -17615,10 +18394,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_AUTOMATIC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_AUTOPRICE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -17638,14 +18419,11 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.FF_LCL_INQUIRY_ID);
 
-                entity.HasIndex(e => e.CUSTOMER_ID)
-                    .HasName("FF_LCL_INQUIRY_CUSTOMERID");
+                entity.HasIndex(e => e.CUSTOMER_ID, "FF_LCL_INQUIRY_CUSTOMERID");
 
-                entity.HasIndex(e => e.DELETE_MARK)
-                    .HasName("FF_LCL_INQUIRY_DELETE");
+                entity.HasIndex(e => e.DELETE_MARK, "FF_LCL_INQUIRY_DELETE");
 
-                entity.HasIndex(e => e.FF_ID)
-                    .HasName("FF_LCL_INQUIRY_FFID");
+                entity.HasIndex(e => e.FF_ID, "FF_LCL_INQUIRY_FFID");
 
                 entity.Property(e => e.FF_LCL_INQUIRY_ID).HasColumnType("NUMBER");
 
@@ -17673,6 +18451,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -17714,14 +18493,11 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.FF_LCL_INQUIRY_PRODUCT_ID);
 
-                entity.HasIndex(e => e.DELETE_MARK)
-                    .HasName("FF_LCL_INQUIRY_PRODUCT_DELETE");
+                entity.HasIndex(e => e.DELETE_MARK, "FF_LCL_INQUIRY_PRODUCT_DELETE");
 
-                entity.HasIndex(e => e.FF_LCL_INQUIRY_ID)
-                    .HasName("FF_LCL_INQUIRY_PRODUCT_IQID");
+                entity.HasIndex(e => e.FF_LCL_INQUIRY_ID, "FF_LCL_INQUIRY_PRODUCT_IQID");
 
-                entity.HasIndex(e => e.LCL_PRODUCT_ID)
-                    .HasName("FF_LCL_INQUIRY_PRODUCT_PRID");
+                entity.HasIndex(e => e.LCL_PRODUCT_ID, "FF_LCL_INQUIRY_PRODUCT_PRID");
 
                 entity.Property(e => e.FF_LCL_INQUIRY_PRODUCT_ID).HasColumnType("NUMBER");
 
@@ -17739,12 +18515,14 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_LCL_INQUIRY_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.IS_RATERULE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LCL_PRODUCT_ID).HasColumnType("NUMBER");
@@ -17822,6 +18600,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -17998,6 +18777,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -18141,6 +18921,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ETA).HasColumnType("DATE");
@@ -18218,6 +18999,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -18281,6 +19063,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DIRECT_AMOUNT).HasColumnType("NUMBER(14,2)");
@@ -18320,20 +19103,15 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.FF_LCL_PRODUCT_ID);
 
-                entity.HasIndex(e => e.AFTER_PRODUCT_ID)
-                    .HasName("FF_LCL_PRODUCT_AFTERPRODID");
+                entity.HasIndex(e => e.AFTER_PRODUCT_ID, "FF_LCL_PRODUCT_AFTERPRODID");
 
-                entity.HasIndex(e => e.DELETE_MARK)
-                    .HasName("FF_LCL_PRODUCT_DELETE");
+                entity.HasIndex(e => e.DELETE_MARK, "FF_LCL_PRODUCT_DELETE");
 
-                entity.HasIndex(e => e.FF_ID)
-                    .HasName("FF_LCL_PRODUCT_FFID");
+                entity.HasIndex(e => e.FF_ID, "FF_LCL_PRODUCT_FFID");
 
-                entity.HasIndex(e => e.MAIN_PRODUCT_ID)
-                    .HasName("FF_LCL_PRODUCT_MAINPRODID");
+                entity.HasIndex(e => e.MAIN_PRODUCT_ID, "FF_LCL_PRODUCT_MAINPRODID");
 
-                entity.HasIndex(e => e.PRE_PRODUCT_ID)
-                    .HasName("FF_LCL_PRODUCT_PREPRODID");
+                entity.HasIndex(e => e.PRE_PRODUCT_ID, "FF_LCL_PRODUCT_PREPRODID");
 
                 entity.Property(e => e.FF_LCL_PRODUCT_ID).HasColumnType("NUMBER");
 
@@ -18353,6 +19131,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -18365,6 +19144,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_CC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MAIN_PRODUCT_ID).HasColumnType("NUMBER");
@@ -18434,6 +19214,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -18474,6 +19255,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -18499,29 +19281,21 @@ namespace OracleDataContext.Models
             {
                 entity.HasKey(e => e.FF_LCL_RATE_ID);
 
-                entity.HasIndex(e => e.AFTER_PRODUCT_ID)
-                    .HasName("FF_LCL_RATE_AFTERPRODID");
+                entity.HasIndex(e => e.AFTER_PRODUCT_ID, "FF_LCL_RATE_AFTERPRODID");
 
-                entity.HasIndex(e => e.AFTER_RATE_ID)
-                    .HasName("FF_LCL_RATE_AFTERRATEID");
+                entity.HasIndex(e => e.AFTER_RATE_ID, "FF_LCL_RATE_AFTERRATEID");
 
-                entity.HasIndex(e => e.DELETE_MARK)
-                    .HasName("FF_LCL_RATE_DELETE");
+                entity.HasIndex(e => e.DELETE_MARK, "FF_LCL_RATE_DELETE");
 
-                entity.HasIndex(e => e.FF_ID)
-                    .HasName("FF_LCL_RATE_FFID");
+                entity.HasIndex(e => e.FF_ID, "FF_LCL_RATE_FFID");
 
-                entity.HasIndex(e => e.MAIN_PRODUCT_ID)
-                    .HasName("FF_LCL_RATE_MAINPRODID");
+                entity.HasIndex(e => e.MAIN_PRODUCT_ID, "FF_LCL_RATE_MAINPRODID");
 
-                entity.HasIndex(e => e.MAIN_RATE_ID)
-                    .HasName("FF_LCL_RATE_MAINRATEID");
+                entity.HasIndex(e => e.MAIN_RATE_ID, "FF_LCL_RATE_MAINRATEID");
 
-                entity.HasIndex(e => e.PRE_PRODUCT_ID)
-                    .HasName("FF_LCL_RATE_PREPRODID");
+                entity.HasIndex(e => e.PRE_PRODUCT_ID, "FF_LCL_RATE_PREPRODID");
 
-                entity.HasIndex(e => e.PRE_RATE_ID)
-                    .HasName("FF_LCL_RATE_PRERATEID");
+                entity.HasIndex(e => e.PRE_RATE_ID, "FF_LCL_RATE_PRERATEID");
 
                 entity.Property(e => e.FF_LCL_RATE_ID).HasColumnType("NUMBER");
 
@@ -18547,6 +19321,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -18567,6 +19342,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_CC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MAIN_LCL_RATE_ID).HasColumnType("NUMBER");
@@ -18641,14 +19417,11 @@ namespace OracleDataContext.Models
                 entity.HasKey(e => e.FF_LCL_RATE_CUSTOMER_ID)
                     .HasName("PK_FF_LCL_RATES_CUSTOMER");
 
-                entity.HasIndex(e => e.CUSTOMER_ID)
-                    .HasName("FF_LCL_RATE_CUSTOMER_CUID");
+                entity.HasIndex(e => e.CUSTOMER_ID, "FF_LCL_RATE_CUSTOMER_CUID");
 
-                entity.HasIndex(e => e.DELETE_MARK)
-                    .HasName("FF_LCL_RATE_CUSTOMER_DELETE");
+                entity.HasIndex(e => e.DELETE_MARK, "FF_LCL_RATE_CUSTOMER_DELETE");
 
-                entity.HasIndex(e => e.FF_LCL_RATE_ID)
-                    .HasName("FF_LCL_RATE_CUSTOMER_RATEID");
+                entity.HasIndex(e => e.FF_LCL_RATE_ID, "FF_LCL_RATE_CUSTOMER_RATEID");
 
                 entity.Property(e => e.FF_LCL_RATE_CUSTOMER_ID).HasColumnType("NUMBER");
 
@@ -18666,6 +19439,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_LCLMAIN_PRODUCT_LEVEL_ID).HasColumnType("NUMBER");
@@ -18709,6 +19483,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -18756,6 +19531,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -18795,6 +19571,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -18811,10 +19588,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_ALLIN_INCLUDE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_MUST_CHARGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -18871,6 +19650,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DIRECT_AMOUNT).HasColumnType("NUMBER(14,2)");
@@ -18883,10 +19663,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_ALLIN_INCLUDE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_MUST_CHARGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LCL_PRODUCT_ID).HasColumnType("NUMBER");
@@ -18935,6 +19717,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -18978,6 +19761,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -19073,6 +19857,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEE_EXPIRE_DATE).HasColumnType("DATE");
@@ -19087,8 +19872,11 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IP).HasMaxLength(100);
 
+                entity.Property(e => e.IS_LOCK).HasPrecision(1);
+
                 entity.Property(e => e.IS_RETURN_INTEREST)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LOAN_EXPIRE_DATE).HasColumnType("DATE");
@@ -19168,12 +19956,14 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.IS_SSL)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MAIL_ACCOUNT)
@@ -19227,6 +20017,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -19288,6 +20079,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -19337,6 +20129,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DIRECT_CUSTOMER_TEU).HasColumnType("NUMBER(38)");
@@ -19376,6 +20169,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -19384,6 +20178,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_HOT)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LANGUAGE_TYPE)
@@ -19455,6 +20250,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -19544,6 +20340,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -19700,6 +20497,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -19848,6 +20646,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -19925,6 +20724,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID)
@@ -19982,6 +20782,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -20029,6 +20830,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -20049,7 +20851,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.PROFIT_AMOUNT).HasColumnType("NUMBER(14,2)");
 
-                entity.HasOne(d => d.FF_ORDER_PROFIT_)
+                entity.HasOne(d => d.FF_ORDER_PROFIT)
                     .WithMany(p => p.FF_ORDER_PROFIT_DETAIL)
                     .HasForeignKey(d => d.FF_ORDER_PROFIT_ID)
                     .HasConstraintName("FK_FF_ORDER_FK_FF_ORD_FF_ORDER");
@@ -20091,6 +20893,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -20172,6 +20975,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -20239,6 +21043,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EMAIL).HasMaxLength(50);
@@ -20249,6 +21054,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_FIRST_SELECT)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.POSTCODE).HasMaxLength(10);
@@ -20286,6 +21092,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLSURCHARGE_OWLEVEL_ID)
@@ -20451,6 +21258,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DESTINATION_AMOUNT).HasColumnType("NUMBER");
@@ -20522,6 +21330,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -20565,6 +21374,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EXEC_DATETIME).HasColumnType("DATE");
@@ -20604,6 +21414,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -20657,6 +21468,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -20703,20 +21515,15 @@ namespace OracleDataContext.Models
                 entity.HasKey(e => e.FF_PRODUCT_ID)
                     .HasName("PK_PRODUCT");
 
-                entity.HasIndex(e => e.AFTER_BRANCH_RATE_ID)
-                    .HasName("FK_FCLPROS_AFTERPID");
+                entity.HasIndex(e => e.FF_ID, "AK_FF_PRODUCT_FFID");
 
-                entity.HasIndex(e => e.FF_ID)
-                    .HasName("AK_FF_PRODUCT_FFID");
+                entity.HasIndex(e => e.PRODUCT_ID, "AK_FF_PRODUCT_PRODUCTID");
 
-                entity.HasIndex(e => e.MAIN_PRODUCT_ID)
-                    .HasName("FK_FCLPROS_MAINPID");
+                entity.HasIndex(e => e.AFTER_BRANCH_RATE_ID, "FK_FCLPROS_AFTERPID");
 
-                entity.HasIndex(e => e.PRE_BRANCH_RATE_ID)
-                    .HasName("FK_FCLPROS_PREPID");
+                entity.HasIndex(e => e.MAIN_PRODUCT_ID, "FK_FCLPROS_MAINPID");
 
-                entity.HasIndex(e => e.PRODUCT_ID)
-                    .HasName("AK_FF_PRODUCT_PRODUCTID");
+                entity.HasIndex(e => e.PRE_BRANCH_RATE_ID, "FK_FCLPROS_PREPID");
 
                 entity.Property(e => e.FF_PRODUCT_ID).HasColumnType("NUMBER");
 
@@ -20760,6 +21567,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -20788,6 +21596,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_MAIN_PRODUCT)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0        ");
 
                 entity.Property(e => e.LIKES).HasColumnType("NUMBER(38)");
@@ -20927,6 +21736,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -20986,6 +21796,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -21099,6 +21910,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -21177,6 +21989,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IGNORE_AS_VIA)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.PROT_CONTRAST_CODE).HasMaxLength(100);
@@ -21207,6 +22020,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EXEC_DATETIME).HasColumnType("DATE");
@@ -21256,6 +22070,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -21288,29 +22103,21 @@ namespace OracleDataContext.Models
                 entity.HasKey(e => e.FF_RATE_ID)
                     .HasName("PK_RATES");
 
-                entity.HasIndex(e => e.AFTER_BRANCH_RATE_ID)
-                    .HasName("FK_FCLRATE_AFTERPID");
+                entity.HasIndex(e => new { e.FF_ID, e.PRODUCT_ID }, "AK_FFRATE_PRODUCT_ID");
 
-                entity.HasIndex(e => e.FCLMAIN_RATE_ID)
-                    .HasName("FK_FCLPROS_MAINRID");
+                entity.HasIndex(e => new { e.FF_ID, e.RECEIPT_CITY_ID, e.DELIVERY_CITY_ID }, "AK_FFRATE_RCDC_ID");
 
-                entity.HasIndex(e => e.FF_ID)
-                    .HasName("AK_FF_RATES_FFID");
+                entity.HasIndex(e => e.FF_ID, "AK_FF_RATES_FFID");
 
-                entity.HasIndex(e => e.MAIN_PRODUCT_ID)
-                    .HasName("FK_FCLRATE_MANPID");
+                entity.HasIndex(e => new { e.PRODUCT_ID, e.SCHEDULE_ID }, "AK_FF_RATES_SPID");
 
-                entity.HasIndex(e => e.PRE_BRANCH_RATE_ID)
-                    .HasName("FK_FCLRATE_RERPID");
+                entity.HasIndex(e => e.FCLMAIN_RATE_ID, "FK_FCLPROS_MAINRID");
 
-                entity.HasIndex(e => new { e.FF_ID, e.PRODUCT_ID })
-                    .HasName("AK_FFRATE_PRODUCT_ID");
+                entity.HasIndex(e => e.AFTER_BRANCH_RATE_ID, "FK_FCLRATE_AFTERPID");
 
-                entity.HasIndex(e => new { e.PRODUCT_ID, e.SCHEDULE_ID })
-                    .HasName("AK_FF_RATES_SPID");
+                entity.HasIndex(e => e.MAIN_PRODUCT_ID, "FK_FCLRATE_MANPID");
 
-                entity.HasIndex(e => new { e.FF_ID, e.RECEIPT_CITY_ID, e.DELIVERY_CITY_ID })
-                    .HasName("AK_FFRATE_RCDC_ID");
+                entity.HasIndex(e => e.PRE_BRANCH_RATE_ID, "FK_FCLRATE_RERPID");
 
                 entity.Property(e => e.FF_RATE_ID).HasColumnType("NUMBER");
 
@@ -21354,6 +22161,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
@@ -21386,6 +22194,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_MAIN_PRODUCT)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0        ");
 
                 entity.Property(e => e.LEAVE_TIME).HasColumnType("NUMBER(38)");
@@ -21535,6 +22344,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_CUSTOMER_ID)
@@ -21595,6 +22405,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_RATE_ID).HasColumnType("NUMBER");
@@ -21633,7 +22444,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.RATE_UPDATEDATE).HasColumnType("DATE");
 
-                entity.HasOne(d => d.FF_RATE_)
+                entity.HasOne(d => d.FF_RATE)
                     .WithMany(p => p.FF_RATE_DETAIL)
                     .HasForeignKey(d => d.FF_RATE_ID)
                     .HasConstraintName("FK_FF_RATE_DETAIL");
@@ -21668,6 +22479,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -21755,6 +22567,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_RATE_ID).HasColumnType("NUMBER");
@@ -21806,6 +22619,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -21881,6 +22695,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_FCLSURCHARGE_RF_ID)
@@ -21943,6 +22758,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.CREATE_USERNAME)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
@@ -22114,11 +22931,16 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.ISCREDITNOTE).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAXPERCENT).HasPrecision(1);
 
                 entity.Property(e => e.LOA_TYPE).HasColumnType("NUMBER(38)");
 
@@ -22195,6 +23017,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -22249,6 +23072,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -22263,10 +23087,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_AUTOMATIC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_AUTOPRICE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -22304,6 +23130,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -22356,6 +23183,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_RTFCL_INQUIRY_ID).HasColumnType("NUMBER");
@@ -22364,6 +23192,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_RATERULE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -22376,7 +23205,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.MODIFY_USERID).HasColumnType("NUMBER");
 
-                entity.HasOne(d => d.FF_RTFCL_INQUIRY_)
+                entity.HasOne(d => d.FF_RTFCL_INQUIRY)
                     .WithMany(p => p.FF_RTFCL_INQUIRY_PRODUCT)
                     .HasForeignKey(d => d.FF_RTFCL_INQUIRY_ID)
                     .HasConstraintName("FK_FF_RTFCL_INQUIRY_PRODUCT");
@@ -22428,6 +23257,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -22570,6 +23400,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ETA).HasColumnType("DATE");
@@ -22643,6 +23474,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -22715,6 +23547,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EIR_QTY)
@@ -22766,6 +23599,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -22829,6 +23663,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -22872,6 +23707,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -22919,6 +23755,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -22964,6 +23801,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -23026,6 +23864,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_RTFCL_RATE_ID).HasColumnType("NUMBER");
@@ -23071,6 +23910,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -23103,7 +23943,7 @@ namespace OracleDataContext.Models
                     .HasColumnType("NUMBER(38)")
                     .HasDefaultValueSql("0 ");
 
-                entity.HasOne(d => d.FF_RTFCL_RATE_)
+                entity.HasOne(d => d.FF_RTFCL_RATE)
                     .WithMany(p => p.FF_RTFCL_RATE_DETAIL)
                     .HasForeignKey(d => d.FF_RTFCL_RATE_ID)
                     .OnDelete(DeleteBehavior.Cascade)
@@ -23128,6 +23968,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -23177,6 +24018,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -23216,6 +24058,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -23228,6 +24071,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_MUST_CHARGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -23283,6 +24127,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -23295,6 +24140,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_MUST_CHARGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -23331,6 +24177,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -23343,7 +24190,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.START_CITY_ID).HasColumnType("NUMBER");
 
-                entity.HasOne(d => d.FF_RTFCL_SURCHARGE_)
+                entity.HasOne(d => d.FF_RTFCL_SURCHARGE)
                     .WithMany(p => p.FF_RTFCL_SURCHARGE_PRODUCT)
                     .HasForeignKey(d => d.FF_RTFCL_SURCHARGE_ID)
                     .HasConstraintName("FK_FF_RTFCL_SURCHARGE_PRODUCT");
@@ -23370,6 +24217,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -23380,10 +24228,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_AUTOMATIC)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_AUTOPRICE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -23427,6 +24277,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -23473,6 +24324,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_RTLCL_INQUIRY_ID).HasColumnType("NUMBER");
@@ -23481,6 +24333,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_RATERULE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -23546,6 +24399,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -23696,6 +24550,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ETA).HasColumnType("DATE");
@@ -23771,6 +24626,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -23826,6 +24682,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -23879,6 +24736,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -23911,7 +24769,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VIA_NAME).HasMaxLength(100);
 
-                entity.HasOne(d => d.FF_RTLCL_PRODUCT_LIST_)
+                entity.HasOne(d => d.FF_RTLCL_PRODUCT_LIST)
                     .WithMany(p => p.FF_RTLCL_PRODUCT)
                     .HasForeignKey(d => d.FF_RTLCL_PRODUCT_LIST_ID)
                     .HasConstraintName("FK_FF_RTLCL_PRODUCT");
@@ -23937,6 +24795,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.END_CBM).HasColumnType("NUMBER(14,2)");
@@ -23947,6 +24806,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_MAX)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -23961,7 +24821,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.REMARK).HasMaxLength(500);
 
-                entity.HasOne(d => d.FF_RTLCL_PRODUCT_)
+                entity.HasOne(d => d.FF_RTLCL_PRODUCT)
                     .WithMany(p => p.FF_RTLCL_PRODUCT_LEVEL)
                     .HasForeignKey(d => d.FF_RTLCL_PRODUCT_ID)
                     .OnDelete(DeleteBehavior.Cascade)
@@ -24000,6 +24860,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
@@ -24043,6 +24904,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -24081,6 +24943,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -24124,6 +24987,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -24167,6 +25031,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -24230,6 +25095,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_RTLCL_PRODUCT_LEVEL_ID).HasColumnType("NUMBER");
@@ -24275,6 +25141,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -24318,6 +25185,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -24363,6 +25231,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -24396,6 +25265,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EFFECTIVE_DATE).HasColumnType("DATE");
@@ -24408,6 +25278,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_MUST_CHARGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -24459,6 +25330,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FEETYPE_ID).HasColumnType("NUMBER");
@@ -24471,6 +25343,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_MUST_CHARGE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -24507,6 +25380,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DEST_CITY_ID).HasColumnType("NUMBER");
@@ -24519,7 +25393,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.START_CITY_ID).HasColumnType("NUMBER");
 
-                entity.HasOne(d => d.FF_RTLCL_SURCHARGE_)
+                entity.HasOne(d => d.FF_RTLCL_SURCHARGE)
                     .WithMany(p => p.FF_RTLCL_SURCHARGE_PRODUCT)
                     .HasForeignKey(d => d.FF_RTLCL_SURCHARGE_ID)
                     .HasConstraintName("FK_FF_RTLCL_SURCHARGE_PRODUCT");
@@ -24559,6 +25433,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ETA).HasColumnType("DATE");
@@ -24628,6 +25503,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.EMAIL).HasMaxLength(50);
@@ -24638,14 +25514,17 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_CONSIGNEE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_NOTIFIER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_SHIPPER)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LAST_USE_TIME).HasColumnType("DATE");
@@ -24678,6 +25557,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VALID)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
             });
 
@@ -24703,12 +25583,14 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.IS_SAME_CONSIGNEE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -24762,6 +25644,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -24839,6 +25722,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -24872,18 +25756,25 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.EXPIRATION_DATE).HasColumnType("DATE");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FILE_ID).HasColumnType("NUMBER");
 
-                entity.Property(e => e.IS_PUSH_MARKETING).HasDefaultValueSql("0");
+                entity.Property(e => e.IS_PUSH_MARKETING)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.IS_PUSH_MYLIST).HasDefaultValueSql("0");
+                entity.Property(e => e.IS_PUSH_MYLIST)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.IS_SHOW_MOBILE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_DATETIME)
@@ -24924,6 +25815,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VALID)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.WECHAT_NO).HasMaxLength(200);
@@ -24951,6 +25843,8 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_SPREAD_ID).HasColumnType("NUMBER");
@@ -24974,6 +25868,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FCL_FROZEN_AMOUNT).HasColumnType("NUMBER(14,2)");
@@ -25020,6 +25915,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.CREATE_USERNAME)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
@@ -25074,6 +25971,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DIRECT_AMOUNT).HasColumnType("NUMBER(14,2)");
@@ -25096,7 +25994,9 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.HQ40_COST).HasColumnType("NUMBER(10,2)");
 
-                entity.Property(e => e.IS_MUST_CHARGE).HasDefaultValueSql("0");
+                entity.Property(e => e.IS_MUST_CHARGE)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.LCL_UNIT).HasColumnType("NUMBER(38)");
 
@@ -25160,6 +26060,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -25195,6 +26096,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_BILL_LIST_ID).HasColumnType("NUMBER");
@@ -25256,6 +26158,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
@@ -25448,6 +26351,8 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
+
                 entity.Property(e => e.REFEREE_ADDRESS).HasMaxLength(200);
 
                 entity.Property(e => e.REFEREE_CODE).HasMaxLength(50);
@@ -25461,6 +26366,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.REFEREE_FAX).HasMaxLength(50);
 
                 entity.Property(e => e.REFEREE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.REFEREE_IS_CERTIFICATION).HasPrecision(1);
 
                 entity.Property(e => e.REFEREE_NAME_CN)
                     .IsRequired()
@@ -25539,6 +26446,10 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_LCLMAIN_PRODUCT_LEVEL_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_LCL_RATE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_ALLIN).HasPrecision(1);
+
+                entity.Property(e => e.IS_CC).HasPrecision(1);
 
                 entity.Property(e => e.LCL_PRODUCT_ID).HasColumnType("NUMBER");
 
@@ -26005,6 +26916,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.FILE_PATH).HasMaxLength(500);
 
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
+
                 entity.Property(e => e.LARGEICON_FILE_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.ROW_INDEX).HasColumnType("NUMBER");
@@ -26176,6 +27089,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CREATE_USERID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -26281,6 +27196,16 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
+
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
                 entity.Property(e => e.MIN_SALE).HasColumnType("NUMBER(38)");
@@ -26365,6 +27290,16 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_ECL_ZONE_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
 
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
@@ -26459,6 +27394,16 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
+
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
                 entity.Property(e => e.MIN_SALE).HasColumnType("NUMBER(38)");
@@ -26546,6 +27491,16 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
+
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
                 entity.Property(e => e.MIN_SALE).HasColumnType("NUMBER(38)");
@@ -26630,6 +27585,16 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_ECL_ZONE_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
 
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
@@ -26717,6 +27682,16 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_ECL_ZONE_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
 
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
@@ -26811,6 +27786,16 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
+
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
                 entity.Property(e => e.MIN_SALE).HasColumnType("NUMBER(38)");
@@ -26899,6 +27884,16 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_ECL_ZONE_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
 
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
@@ -27139,6 +28134,8 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(30);
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.DELIVERY_CODE)
@@ -27162,6 +28159,10 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_RATE_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_RATE_LIST_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
+
+                entity.Property(e => e.IS_SUPER_PARTNER).HasPrecision(1);
 
                 entity.Property(e => e.LEAVE_TIME).HasColumnType("NUMBER(38)");
 
@@ -27214,6 +28215,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.RECEIPT_CODE).HasMaxLength(10);
 
                 entity.Property(e => e.RECEIPT_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.RECOMMEND_ALLIANCE_FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.REMARK).IsUnicode(false);
 
@@ -27291,6 +28294,10 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_LCLMAIN_PRODUCT_LEVEL_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_LCL_RATE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_ALLIN).HasPrecision(1);
+
+                entity.Property(e => e.IS_CC).HasPrecision(1);
 
                 entity.Property(e => e.LCL_PRODUCT_ID).HasColumnType("NUMBER");
 
@@ -27401,6 +28408,8 @@ namespace OracleDataContext.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.IS_CC).HasPrecision(1);
+
                 entity.Property(e => e.LCL_PRODUCT_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
@@ -27477,6 +28486,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_LCLMAIN_PRODUCT_LEVEL_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_LCL_RATE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_CC).HasPrecision(1);
 
                 entity.Property(e => e.LCL_PRODUCT_ID).HasColumnType("NUMBER");
 
@@ -27644,6 +28655,10 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.FF_LCL_RATE_ID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.IS_ALLIN).HasPrecision(1);
+
+                entity.Property(e => e.IS_CC).HasPrecision(1);
+
                 entity.Property(e => e.LCL_PRODUCT_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
@@ -27736,6 +28751,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.COMPANY_NAME_EN)
                     .IsRequired()
                     .HasMaxLength(100);
+
+                entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FILE_CN_ID).HasColumnType("NUMBER");
 
@@ -28030,6 +29047,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.CREATE_USERID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.DELETE_MARK).HasPrecision(1);
+
                 entity.Property(e => e.DELIVERY_CITY_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -28045,6 +29064,10 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_COMPANY_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
+
+                entity.Property(e => e.IS_SUPER_PARTNER).HasPrecision(1);
 
                 entity.Property(e => e.MAIN_PRODUCT_ID).HasColumnType("NUMBER");
 
@@ -28093,6 +29116,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.RECEIPT_CITY_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.RECEIPT_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.RECOMMEND_ALLIANCE_FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.REMARK).IsUnicode(false);
 
@@ -28165,6 +29190,20 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
+
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SUPER_PARTNER).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
+
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
                 entity.Property(e => e.MIN_SALE).HasColumnType("NUMBER(38)");
@@ -28184,6 +29223,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.RATE_IMPORT_TYPE).HasColumnType("NUMBER(38)");
 
                 entity.Property(e => e.RATE_SOURCE).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.RECOMMEND_ALLIANCE_FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.START_CITY_ID).HasColumnType("NUMBER");
 
@@ -28262,6 +29303,20 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.FF_ID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
+
+                entity.Property(e => e.IS_EXPRESS).HasPrecision(1);
+
+                entity.Property(e => e.IS_FBA).HasPrecision(1);
+
+                entity.Property(e => e.IS_PAK).HasPrecision(1);
+
+                entity.Property(e => e.IS_SPECIALLINE).HasPrecision(1);
+
+                entity.Property(e => e.IS_SUPER_PARTNER).HasPrecision(1);
+
+                entity.Property(e => e.IS_TAX).HasPrecision(1);
+
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
                 entity.Property(e => e.MIN_SALE).HasColumnType("NUMBER(38)");
@@ -28281,6 +29336,8 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.RATE_IMPORT_TYPE).HasColumnType("NUMBER(38)");
 
                 entity.Property(e => e.RATE_SOURCE).HasColumnType("NUMBER(38)");
+
+                entity.Property(e => e.RECOMMEND_ALLIANCE_FF_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.START_CITY_ID).HasColumnType("NUMBER");
 
@@ -28349,6 +29406,10 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.FF_LCL_RATE_ID).HasColumnType("NUMBER");
 
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
+
+                entity.Property(e => e.IS_SUPER_PARTNER).HasPrecision(1);
+
                 entity.Property(e => e.LCL_PRODUCT_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
@@ -28415,6 +29476,8 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.RECEIPT_WAREHOUSE).HasMaxLength(30);
 
+                entity.Property(e => e.RECOMMEND_ALLIANCE_FF_ID).HasColumnType("NUMBER");
+
                 entity.Property(e => e.SUPPLIER_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.TOP_SUPPLIER_ID).HasColumnType("NUMBER");
@@ -28459,6 +29522,10 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_RTFCL_PRODUCT_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_RTFCL_RATE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
+
+                entity.Property(e => e.IS_SUPER_PARTNER).HasPrecision(1);
 
                 entity.Property(e => e.MODIFY_DATETIME).HasColumnType("DATE");
 
@@ -28528,6 +29595,10 @@ namespace OracleDataContext.Models
                 entity.Property(e => e.FF_RTLCL_PRODUCT_ID).HasColumnType("NUMBER");
 
                 entity.Property(e => e.FF_RTLCL_RATE_ID).HasColumnType("NUMBER");
+
+                entity.Property(e => e.IS_CERTIFICATION).HasPrecision(1);
+
+                entity.Property(e => e.IS_SUPER_PARTNER).HasPrecision(1);
 
                 entity.Property(e => e.LEVEL_TYPE).HasColumnType("NUMBER(38)");
 
@@ -28706,10 +29777,12 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.IS_DOUBLE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_COMPANYID).HasColumnType("NUMBER");
@@ -28732,7 +29805,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.PRICE_CUSTOMER_BYWEIGHT_ID).HasColumnType("NUMBER");
 
-                entity.HasOne(d => d.ORDER_EIR_APPLY_)
+                entity.HasOne(d => d.ORDER_EIR_APPLY)
                     .WithMany(p => p.ORDER_EIR)
                     .HasForeignKey(d => d.ORDER_EIR_APPLY_ID)
                     .HasConstraintName("FK_TRAILER_CONTAINE");
@@ -28780,6 +29853,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.FACTORY_CONTACT).HasMaxLength(35);
@@ -28794,6 +29868,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IS_TRANSFER_CUSTOM)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.LOC_CUSTOM).HasMaxLength(150);
@@ -28820,6 +29895,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.NEED_DRIVER_LICENSE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.ORDER_ID).HasColumnType("NUMBER");
@@ -28897,6 +29973,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ADDRESS).HasMaxLength(200);
@@ -28929,14 +30006,20 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.IN_CUSTOMS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
-                entity.Property(e => e.IN_INSPECTION).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_INSPECTION)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.IN_TAX).HasDefaultValueSql("0");
+                entity.Property(e => e.IN_TAX)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.IN_TRUCK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.MODIFY_COMPANYID).HasColumnType("NUMBER");
@@ -28957,42 +30040,58 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.OUT_AMS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.OUT_CUSTOMS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.OUT_ENS)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.OUT_FUMIGATION)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.OUT_INSPECTION)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.OUT_INSURANCE)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
-                entity.Property(e => e.OUT_ISF).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_ISF)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_PERMIT).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_PERMIT)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
-                entity.Property(e => e.OUT_PURCHASE).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_PURCHASE)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.OUT_TRUCK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
-                entity.Property(e => e.OUT_VAT).HasDefaultValueSql("0");
+                entity.Property(e => e.OUT_VAT)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.OUT_VGM)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.RECEIPT_ADDRESS).HasMaxLength(200);
@@ -29021,6 +30120,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.VALID)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("1 ");
             });
 
@@ -29064,6 +30164,7 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.DELETE_MARK)
                     .IsRequired()
+                    .HasPrecision(1)
                     .HasDefaultValueSql("0 ");
 
                 entity.Property(e => e.DELIVERY_ID).HasColumnType("NUMBER");
@@ -29132,9 +30233,11 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.TT).HasColumnType("NUMBER(38)");
 
-                entity.Property(e => e.VALID).HasDefaultValueSql("1");
+                entity.Property(e => e.VALID)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("1");
 
-                entity.HasOne(d => d.PRODUCT_DEMAND_)
+                entity.HasOne(d => d.PRODUCT_DEMAND)
                     .WithMany(p => p.PRODUCT_DEMAND_SUPPLIER)
                     .HasForeignKey(d => d.PRODUCT_DEMAND_ID)
                     .HasConstraintName("FK_PRODUCT_DEMAND_FF");
@@ -29244,11 +30347,14 @@ namespace OracleDataContext.Models
             {
                 entity.HasNoKey();
 
-                entity.Property(e => e.ACTION).HasColumnType("CHAR(1)");
+                entity.Property(e => e.ACTION)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.OBJECT_)
-                    .HasColumnName("OBJECT#")
-                    .HasColumnType("NUMBER");
+                    .HasColumnType("NUMBER")
+                    .HasColumnName("OBJECT#");
 
                 entity.Property(e => e.OBJECT_NAME)
                     .HasMaxLength(32)
@@ -29417,8 +30523,9 @@ namespace OracleDataContext.Models
 
                 entity.Property(e => e.FAX).HasMaxLength(50);
 
-                entity.Property(e => e.MAIN_CONTACT).HasDefaultValueSql(@"0
-");
+                entity.Property(e => e.MAIN_CONTACT)
+                    .HasPrecision(1)
+                    .HasDefaultValueSql("0\n");
 
                 entity.Property(e => e.MODIFY_DATETIME).HasColumnType("DATE");
 
@@ -29521,6 +30628,8 @@ namespace OracleDataContext.Models
 
             modelBuilder.HasSequence("BASE_FEE_STANDARD_SEQ");
 
+            modelBuilder.HasSequence("BASE_HOMEPAGE_CONFIGURE_SEQ");
+
             modelBuilder.HasSequence("BASE_HOMEPAGE_PICTURE_SEQ");
 
             modelBuilder.HasSequence("BASE_JOB_LOG_SEQ");
@@ -29555,7 +30664,7 @@ namespace OracleDataContext.Models
 
             modelBuilder.HasSequence("BASE_SPREAD_SEQ");
 
-            modelBuilder.HasSequence("BASE_WAREHOUSE_REALTED_SEQ");
+            modelBuilder.HasSequence("BASE_WAREHOUSE_RELATED_SEQ");
 
             modelBuilder.HasSequence("BASE_WAREHOUSE_SEQ");
 
@@ -29771,6 +30880,10 @@ namespace OracleDataContext.Models
 
             modelBuilder.HasSequence("FF_BUY_SERVICE_SEQ");
 
+            modelBuilder.HasSequence("FF_CARRIER_CONTRACT_ID");
+
+            modelBuilder.HasSequence("FF_CARRIER_CONTRACT_SEQ");
+
             modelBuilder.HasSequence("FF_CARRIER_CONTRAST_SEQ");
 
             modelBuilder.HasSequence("FF_CRM_SEQ");
@@ -29914,6 +31027,8 @@ namespace OracleDataContext.Models
             modelBuilder.HasSequence("FF_FCLSURCHARGE_RFP_SEQ");
 
             modelBuilder.HasSequence("FF_FCLSURCHARGE_SEQ");
+
+            modelBuilder.HasSequence("FF_FEETYPE_SEQ");
 
             modelBuilder.HasSequence("FF_FF_AIRBRANCH_RATE_SEQ");
 
@@ -30192,6 +31307,8 @@ namespace OracleDataContext.Models
             modelBuilder.HasSequence("MESSAGE_SEQ");
 
             modelBuilder.HasSequence("NEWS_SEQ");
+
+            modelBuilder.HasSequence("NOTICE_SEQ");
 
             modelBuilder.HasSequence("OI_ORDER_BL_SEQ");
 

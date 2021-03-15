@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BASE_ALLIANCE
@@ -23,5 +25,6 @@ namespace OracleDataContext.Models
         public string CREATE_USERNAME { get; set; }
         public string CREATE_FULLNAME { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
+        public decimal? COMPANY_ID { get; set; }
     }
 }

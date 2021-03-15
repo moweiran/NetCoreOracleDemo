@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BASE_HELPINFO
@@ -23,6 +25,6 @@ namespace OracleDataContext.Models
         public decimal? CREATECOMPANYID { get; set; }
         public DateTime CREATEDATETIME { get; set; }
 
-        public virtual BASE_HELP_CLASS HELP_CLASS_ { get; set; }
+        public virtual BASE_HELP_CLASS HELP_CLASS { get; set; }
     }
 }

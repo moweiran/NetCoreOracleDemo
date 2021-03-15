@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BOOKING_ORDER_OTHER
@@ -51,6 +53,6 @@ namespace OracleDataContext.Models
         public decimal? OUTTRUCK_CITY_ID { get; set; }
         public decimal? INTRUCK_CITY_ID { get; set; }
 
-        public virtual BOOKING_ORDER BOOKING_ORDER_ { get; set; }
+        public virtual BOOKING_ORDER BOOKING_ORDER { get; set; }
     }
 }

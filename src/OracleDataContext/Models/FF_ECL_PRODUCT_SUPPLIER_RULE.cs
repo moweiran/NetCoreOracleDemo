@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_ECL_PRODUCT_SUPPLIER_RULE
@@ -19,6 +21,6 @@ namespace OracleDataContext.Models
         public DateTime MODIFY_DATETIME { get; set; }
         public decimal? RATE_ADD_CONTINUED { get; set; }
 
-        public virtual FF_ECL_PRODUCT_SUPPLIER FF_ECL_PRODUCT_SUPPLIER_ { get; set; }
+        public virtual FF_ECL_PRODUCT_SUPPLIER FF_ECL_PRODUCT_SUPPLIER { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_HOMEPAGE_CONFIGURE
@@ -60,5 +62,17 @@ namespace OracleDataContext.Models
         public bool? IS_SHOW_RTLCL_RATE { get; set; }
         public bool? IS_SHOW_FCL_RATE { get; set; }
         public bool? IS_SHOW_LCL_RATE { get; set; }
+        public decimal? RATESEARCH_FCL_INDEX { get; set; }
+        public decimal? RATESEARCH_LCL_INDEX { get; set; }
+        public decimal? RATESEARCH_AIR_INDEX { get; set; }
+        public decimal? RATESEARCH_TRUCKING_INDEX { get; set; }
+        public decimal? RATESEARCH_ECL_INDEX { get; set; }
+        public decimal? RATESEARCH_FBA_INDEX { get; set; }
+        public decimal? MENU_RATESEARCH_SHOW { get; set; }
+        public decimal? MENU_TOOLS_SHOW { get; set; }
+        public decimal? MENU_RESOURCE_SHOW { get; set; }
+        public decimal? MENU_RATESEARCH_INDEX { get; set; }
+        public decimal? MENU_TOOLS_INDEX { get; set; }
+        public decimal? MENU_RESOURCE_INDEX { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_ECL_PRODUCT
@@ -35,7 +37,7 @@ namespace OracleDataContext.Models
         public decimal PAK_TYPE { get; set; }
         public string SERVICE_PROMISE { get; set; }
 
-        public virtual FF_ECL_PRODUCT_LIST FF_ECL_PRODUCT_LIST_ { get; set; }
+        public virtual FF_ECL_PRODUCT_LIST FF_ECL_PRODUCT_LIST { get; set; }
         public virtual ICollection<FF_ECL_PRODUCT_FBA> FF_ECL_PRODUCT_FBA { get; set; }
     }
 }

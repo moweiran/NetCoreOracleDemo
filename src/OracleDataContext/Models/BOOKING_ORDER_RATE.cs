@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BOOKING_ORDER_RATE
@@ -48,7 +50,7 @@ namespace OracleDataContext.Models
         public decimal? RATE_SALES_COST { get; set; }
         public decimal? EIR_QTY { get; set; }
 
-        public virtual BOOKING_ORDER BOOKING_ORDER_ { get; set; }
+        public virtual BOOKING_ORDER BOOKING_ORDER { get; set; }
         public virtual ICollection<BOOKING_ORDER_FREEDETENTION> BOOKING_ORDER_FREEDETENTION { get; set; }
     }
 }

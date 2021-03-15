@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class MV_SEARCH_FCL_RATE
@@ -64,6 +66,7 @@ namespace OracleDataContext.Models
         public bool? IS_CERTIFICATION { get; set; }
         public bool? IS_SUPER_PARTNER { get; set; }
         public DateTime COMPANY_CREATEDATE { get; set; }
+        public decimal? RECOMMEND_ALLIANCE_FF_ID { get; set; }
         public decimal? FCL_SURPLUS_AMOUNT { get; set; }
         public decimal? PUBLIC_GP20 { get; set; }
         public decimal? PUBLIC_GP40 { get; set; }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class CALISTA_BOOKING_CONTAINER
@@ -14,5 +16,6 @@ namespace OracleDataContext.Models
         public string CONTAINERSTATUS { get; set; }
         public bool? SHIPPEROWNED { get; set; }
         public bool? HAZARDOUS { get; set; }
+        public decimal? SEQNO { get; set; }
     }
 }

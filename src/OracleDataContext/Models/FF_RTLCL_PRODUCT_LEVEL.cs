@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_RTLCL_PRODUCT_LEVEL
@@ -20,6 +22,6 @@ namespace OracleDataContext.Models
         public string CREATE_FULLNAME { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
 
-        public virtual FF_RTLCL_PRODUCT FF_RTLCL_PRODUCT_ { get; set; }
+        public virtual FF_RTLCL_PRODUCT FF_RTLCL_PRODUCT { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_ECL_PRODUCT_LEVEL
@@ -22,6 +24,6 @@ namespace OracleDataContext.Models
         public decimal? FIRST_WEIGHT { get; set; }
         public decimal? CONTINUED_WEIGHT { get; set; }
 
-        public virtual FF_ECL_PRODUCT_LIST FF_ECL_PRODUCT_LIST_ { get; set; }
+        public virtual FF_ECL_PRODUCT_LIST FF_ECL_PRODUCT_LIST { get; set; }
     }
 }

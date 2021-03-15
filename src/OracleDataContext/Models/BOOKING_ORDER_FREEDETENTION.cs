@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BOOKING_ORDER_FREEDETENTION
@@ -39,6 +41,6 @@ namespace OracleDataContext.Models
         public decimal? CREATE_COMPANYID { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
 
-        public virtual BOOKING_ORDER_RATE BOOKING_ORDER_RATE_ { get; set; }
+        public virtual BOOKING_ORDER_RATE BOOKING_ORDER_RATE { get; set; }
     }
 }

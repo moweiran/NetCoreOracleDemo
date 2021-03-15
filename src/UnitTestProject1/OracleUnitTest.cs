@@ -1,8 +1,6 @@
 using Dapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MySql.Data.MySqlClient;
 using Oracle.ManagedDataAccess.Client;
 using OracleDataContext.Models;
 using System;

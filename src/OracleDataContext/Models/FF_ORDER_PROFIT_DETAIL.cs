@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_ORDER_PROFIT_DETAIL
@@ -21,6 +23,6 @@ namespace OracleDataContext.Models
         public DateTime CREATE_DATETIME { get; set; }
         public decimal? BILL_LIST_ID { get; set; }
 
-        public virtual FF_ORDER_PROFIT FF_ORDER_PROFIT_ { get; set; }
+        public virtual FF_ORDER_PROFIT FF_ORDER_PROFIT { get; set; }
     }
 }

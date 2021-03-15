@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BASE_NEWS
@@ -39,5 +41,6 @@ namespace OracleDataContext.Models
         public DateTime? BEGIN_DATE { get; set; }
         public DateTime? END_DATE { get; set; }
         public string ADDRESS { get; set; }
+        public decimal? FF_ID { get; set; }
     }
 }

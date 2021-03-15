@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_ECL_RATE_DETAIL
@@ -31,6 +33,6 @@ namespace OracleDataContext.Models
         public decimal? ADD_PUBLIC_CONTINUED { get; set; }
         public decimal? RATE_PUBLIC_CONTINUED { get; set; }
 
-        public virtual FF_ECL_RATE FF_ECL_RATE_ { get; set; }
+        public virtual FF_ECL_RATE FF_ECL_RATE { get; set; }
     }
 }

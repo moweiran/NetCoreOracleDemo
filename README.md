@@ -10,7 +10,9 @@ NetCoreOracleDemo
 2. DbFirst映射数据实体对象
 
 
-Scaffold-DbContext "User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:1521/ORCL;" Oracle.EntityFrameworkCore -Context "CARGOContext"  -OutputDir Models -Force -UseDatabaseNames
+Scaffold-DbContext "User Id=CARGO;Password=CARGO;Data Source=192.168.0.43:1521/ORCL;" Oracle.EntityFrameworkCore -Context "CARGOContext"  -OutputDir Models -Force -UseDatabaseNames -NoPluralize
+注意
+-NoPluralize 在net5.0
 
 Mysql
 Scaffold-DbContext "server=192.168.0.46;port=13306;user=xxy;password=xxy@678.com;database=newship" MySql.Data.EntityFrameworkCore -Context "NewShipContext"  -OutputDir Models -Force -UseDatabaseNames -Project "PomeloMySqlDataContext"

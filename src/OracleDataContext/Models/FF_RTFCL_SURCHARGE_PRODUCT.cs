@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_RTFCL_SURCHARGE_PRODUCT
@@ -16,6 +18,6 @@ namespace OracleDataContext.Models
         public string CREATE_FULLNAME { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
 
-        public virtual FF_RTFCL_SURCHARGE FF_RTFCL_SURCHARGE_ { get; set; }
+        public virtual FF_RTFCL_SURCHARGE FF_RTFCL_SURCHARGE { get; set; }
     }
 }

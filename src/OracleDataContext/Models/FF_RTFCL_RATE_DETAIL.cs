@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_RTFCL_RATE_DETAIL
@@ -23,6 +25,6 @@ namespace OracleDataContext.Models
         public string CREATE_FULLNAME { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
 
-        public virtual FF_RTFCL_RATE FF_RTFCL_RATE_ { get; set; }
+        public virtual FF_RTFCL_RATE FF_RTFCL_RATE { get; set; }
     }
 }

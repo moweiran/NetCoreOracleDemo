@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_ECL_PRODUCT_FBA
@@ -17,6 +19,6 @@ namespace OracleDataContext.Models
         public string CREATE_FULLNAME { get; set; }
         public DateTime CREATE_DATETIME { get; set; }
 
-        public virtual FF_ECL_PRODUCT FF_ECL_PRODUCT_ { get; set; }
+        public virtual FF_ECL_PRODUCT FF_ECL_PRODUCT { get; set; }
     }
 }

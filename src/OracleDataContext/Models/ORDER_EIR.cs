@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class ORDER_EIR
@@ -30,6 +32,6 @@ namespace OracleDataContext.Models
         public decimal? DANGEROU_LEVEL_ID { get; set; }
         public decimal? PRICE_CUSTOMER_BYWEIGHT_ID { get; set; }
 
-        public virtual ORDER_EIR_APPLY ORDER_EIR_APPLY_ { get; set; }
+        public virtual ORDER_EIR_APPLY ORDER_EIR_APPLY { get; set; }
     }
 }

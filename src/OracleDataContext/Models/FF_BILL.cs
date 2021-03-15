@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_BILL
@@ -43,5 +45,7 @@ namespace OracleDataContext.Models
         public string PAYMENT_CURRENCY { get; set; }
         public decimal? RATE { get; set; }
         public decimal? PAYMENT_AMOUNT { get; set; }
+        public decimal? TAX_PERCENT { get; set; }
+        public decimal? TAX_AMOUNT { get; set; }
     }
 }

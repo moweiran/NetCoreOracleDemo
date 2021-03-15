@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BOOKING_ORDER_SURCHARGE
@@ -30,6 +32,6 @@ namespace OracleDataContext.Models
         public DateTime CREATE_DATETIME { get; set; }
         public decimal COST { get; set; }
 
-        public virtual BOOKING_ORDER BOOKING_ORDER_ { get; set; }
+        public virtual BOOKING_ORDER BOOKING_ORDER { get; set; }
     }
 }

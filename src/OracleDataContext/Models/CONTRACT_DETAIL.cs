@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class CONTRACT_DETAIL
@@ -36,7 +38,7 @@ namespace OracleDataContext.Models
         public decimal PFD_ID { get; set; }
         public bool? DELETE_MARK { get; set; }
 
-        public virtual CONTRACT CONTRACT_ { get; set; }
+        public virtual CONTRACT CONTRACT { get; set; }
         public virtual ICollection<CONTRACT_SURCHARGE> CONTRACT_SURCHARGE { get; set; }
     }
 }

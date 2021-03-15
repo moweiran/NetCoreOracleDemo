@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BASE_WAREHOUSE
     {
         public decimal ID { get; set; }
+        public decimal FF_ID { get; set; }
         public string WAREHOUSE_NAME { get; set; }
         public decimal CITY_ID { get; set; }
         public decimal IS_MAIN_WAREHOUSE { get; set; }

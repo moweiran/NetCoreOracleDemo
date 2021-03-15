@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class MV_SEARCH_OTHER_ADVERTISEMENTS
@@ -16,5 +18,6 @@ namespace OracleDataContext.Models
         public decimal? FILE_CN_ID { get; set; }
         public decimal? FILE_EN_ID { get; set; }
         public decimal? M_BG_FILE_ID { get; set; }
+        public decimal? FF_ID { get; set; }
     }
 }

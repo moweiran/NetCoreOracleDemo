@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_AIR_ORDER_CHARGE
@@ -33,6 +35,6 @@ namespace OracleDataContext.Models
         public DateTime CREATE_DATETIME { get; set; }
         public decimal DATA_SOURCE { get; set; }
 
-        public virtual FF_AIR_ORDER AIR_ORDER_ { get; set; }
+        public virtual FF_AIR_ORDER AIR_ORDER { get; set; }
     }
 }

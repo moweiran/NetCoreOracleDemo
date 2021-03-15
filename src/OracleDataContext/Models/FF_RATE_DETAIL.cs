@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class FF_RATE_DETAIL
@@ -27,6 +29,6 @@ namespace OracleDataContext.Models
         public decimal? HQ40_ADD { get; set; }
         public decimal? GP45_ADD { get; set; }
 
-        public virtual FF_RATES FF_RATE_ { get; set; }
+        public virtual FF_RATES FF_RATE { get; set; }
     }
 }

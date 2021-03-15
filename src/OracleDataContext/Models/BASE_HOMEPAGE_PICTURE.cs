@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace OracleDataContext.Models
 {
     public partial class BASE_HOMEPAGE_PICTURE
@@ -24,5 +26,6 @@ namespace OracleDataContext.Models
         public decimal? M_BG_FILE_ID { get; set; }
         public string M_CLICK_URL { get; set; }
         public decimal? ACTIVITY_ID { get; set; }
+        public decimal? FF_ID { get; set; }
     }
 }
