@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -13,7 +13,7 @@
     </PackageReference>
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="3.19.80" />
-    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.90" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.180" />
   </ItemGroup>
 
   <ItemGroup>
